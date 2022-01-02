@@ -1,0 +1,38 @@
+{% extends 'index/base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <div class='gray'>
+        <div class='container'>
+            <div class='row'>
+                <div class='col-11 col-sm-11 col-md-8 col-lg-6 col-xl-5 col-xxl-4 m-auto'>
+                    <form class='m-4 light-round-all shadow-lg bg-dark p-5 pb-2 pt-3' method='POST'>
+                        <h1 class='text-light display-5 mb-0'>Login</h1>
+                        <hr class='bg-light mt-0 mb-1'>
+                        <p class='text-light mb-3'><small>Please enter your login information below.</small></p>
+                        {{form.hidden_tag()}}
+                        {% for field in form if field.widget.input_type != 'hidden' %}
+                            <div class='form-floating mb-3'>
+                                {% if field.type == 'PasswordField' %}
+                                    {{field(class_='form-control rounded shadow')}}
+                                    {{field.label(class_='ms-2 form-label shadow-sm')}}
+                                    <p><small><small><a href="/users/forgotpassword">Forgot Password?</a></small></small></p>
+                                {% else %}
+                                    {{field(class_='form-control rounded')}}
+                                    {{field.label(class_='ms-2 form-label shadow-sm')}}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button class='d-block m-auto shadow btn nav-user-btn mb-5 mt-3'>Login</button>
+                        <p class='text-light fs-6 mb-1 mt-4'><small><small>Having trouble logging in?
+                            <a href="/users/login/verify">Click here</a></small></small>
+                        </p>
+                        <p class='text-light fs-6'><small><small>By registering you agree to our 
+                            <a class='link-primary' href="/tos">Terms of service</a>
+                            and have read and understood our <a href="/privacypolicy">Privacy Poilcy</a>.</small></small>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

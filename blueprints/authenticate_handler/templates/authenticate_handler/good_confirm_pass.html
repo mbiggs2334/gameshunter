@@ -1,0 +1,30 @@
+{% extends 'index/base.html' %}
+{% block title %}GamesHunter{% endblock %}
+{% block content%}
+<div class='max-height dark-gray'>
+    <div class='gray'>
+        <div class='container'>
+            <div class='row'>
+                <div class='col-12 col-md-5 col-xxl-5 m-auto'>
+                    <form class='m-4 light-round-all shadow-lg bg-dark p-5 py-4' method='POST'>
+                        {{form.hidden_tag()}}
+                        {% for field in form if field.widget.input_type != 'hidden' %}
+                            <div class='form-floating mb-3'>
+                                {{field(class_='form-control rounded')}}
+                                {{field.label(class_='ms-2 form-label shadow-sm')}}
+                            </div>
+                        {% endfor %}
+                        {% for fieldName, errorMessages in form.errors.items() %}
+                            {% for error in errorMessages %}
+                                <p class=' text-light mt-0 bg-danger light-round-all'>
+                                    <span class='ms-3'>{{error}}</span></p>
+                            {% endfor %}
+                        {% endfor %}
+                        <button class='d-block m-auto shadow btn nav-user-btn mb-4 mt-3'>Change Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'index/base.html' %}
+{% block title %}Delete Account{% endblock %}
+
+{% block content %}
+<div class="gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-11 col-sm-11 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto py-4">
+                <p>To <span class='fst-italic fw-bold'>permanently delete</span> your account. Please type 'DELETE' in the box below and hit "Delete Account".</p>
+                <form method='POST'>
+                    {{form.hidden_tag()}}
+                    {% for field in form if field.widget.input_type != 'hidden' %}
+                        {{field(id_='remove-input', class_='form-control mb-3')}}
+                    {% endfor %}
+                    <div class='float-end'>
+                        <button id='del-btn' class='btn disabled border border-dark'>Delete Account</button>
+                        <a class='btn btn-primary' href="/users/{{g.user.id}}/profile">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripttags %}
+<script src="{{url_for('users_bp.static', filename='delete_account.js')}}"></script>
+{% endblock%}

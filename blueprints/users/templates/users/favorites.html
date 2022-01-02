@@ -1,0 +1,115 @@
+{% extends 'index/base.html' %}
+{% block title %}{{user.username}}'s' Favorites{% endblock %}
+{% block content%}
+<div class='darker-gray text-light'>
+    <div class='container py-3'>
+        <div class="row mx-0">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-8 col-xxl-7 mx-auto">
+                {% if user.id == g.user.id %}
+                    <div class="row">
+                        <h1 class='display-1 text-center mb-1'>Your Favorites</h1>
+                    </div>
+                    <hr class='bg-dark border border-dark my-0 mb-1'>
+                    {% if g.user.favorites %}
+                    <div class='row mx-0' id='form-row'>
+                        <form id='fav-form' method='POST' name='fav-form'>
+                            {% for game in g.user.favorites|sort(attribute='position') %}
+                                <div data-pos='{{game.position}}' class='dark-gray row my-3 border border-dark rounded shadow'>
+                                    <input type="hidden"
+                                    name='{{game.game_id}}' value='{{game.position}}'>
+                                    <div class='col-1 d-flex flex-column justify-content-center align-items-center'>
+                                        <h2 id='game-position-header' data-pos-id='this' class='fs-1'>{{game.position}}.</h2>
+                                    </div>
+                                    <div id='arrow-box' class="col-1 d-flex flex-column justify-content-center align-items-center">
+                                        {% if g.user.favorites|length == 1 %}
+                                        {% else%}
+                                        {% if (g.user.favorites|length > 1) and loop.first %}
+                                        <i id='move-down' class="remove fs-2 fas fa-arrow-down"></i>
+                                        {% elif loop.last %}
+                                        <i id='move-up' class="text-info fs-2 fas fa-arrow-up"></i>
+                                        {% else %}
+                                        <i id='move-up' class="mb-3 text-info fs-2 fas fa-arrow-up"></i>
+                                        <i id='move-down' class="remove fs-2 fas fa-arrow-down"></i>
+                                        {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div style='background-image: url("{{game.game.background_img}}"); background-size: cover; background-position: center;' class='col fav-img-div px-0 border-start border-end border-dark'>
+                                    </div>
+                                    <div class='col d-flex justify-content-evenly flex-column'>
+                                        <div class="row">
+                                            <a class='link-light' href="/games/{{game.game_id}}">
+                                            <h4 class='ms-3'>{{game.game.title}}</h4>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <span class='ms-3'>Released:&nbsp;&nbsp;<b>{{game.game.release_date}}</b></span>
+                                        </div>
+                                        <div class="row">
+                                            <div class='col d-flex flex-row justify-content-end'>
+                                            <a id='remove-btn' class='btn btn-sm nav-user-btn border border-dark' href="">Remove</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </form>
+                    </div>
+                    <div class='row'>
+                        <div class="col d-flex flex-row justify-content-center">
+                            <input form='fav-form' type='submit' class='btn btn-primary me-2 border border-dark' value='Save Favorites'>
+                            <a class='btn nav-user-btn border border-dark' href="/users/{{g.user.id}}/profile">Cancel</a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class='text-center fs-5'>You don't have any favorites.</p>
+                    {% endif %}
+                {% else %}
+                    <div class="row mx-0 px-0">
+                        <h1 class='display-1 text-center mb-1'>{{user.username}}'s Favorites</h1>
+                    </div>
+                    <hr class='bg-dark border border-dark my-0 mb-1'>
+                    {% if user.favorites %}
+                        <div class='row mx-0 px-0'>
+                            {% for game in user.favorites|sort(attribute='position') %}
+                                <div data-pos='{{game.position}}' class='dark-gray row mt-3 mb-2 mx-0 px-0 border border-dark rounded shadow'>
+                                    <input type="hidden"
+                                    name='{{game.game_id}}' value='{{game.position}}'>
+                                    <div class='col-1 d-flex flex-column justify-content-center align-items-center'>
+                                        <h2 id='game-position-header' data-pos-id='this' class='fs-1'>{{game.position}}.</h2>
+                                    </div>
+                                    <div style='background-image: url("{{game.game.background_img}}"); background-size: cover; background-position: center;' class='col fav-img-div px-0 border-start border-end border-dark'>
+                                    </div>
+                                    <div class='col d-flex justify-content-evenly flex-column'>
+                                        <div class="row">
+                                            <a class='link-light' href="/games/{{game.game_id}}">
+                                            <h4 class='ms-3'>{{game.game.title}}</h4>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <span class='ms-3'>Released:&nbsp;&nbsp;<b>{{game.game.release_date}}</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {% if user.id == g.user.id %}
+                        <p class='text-center fs-5'>You don't have any favorites.</p>
+                        {% else %}
+                        <p class='text-center fs-5'>{{user.username}} doesn't have any favorites.</p>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+{% block scripttags %}
+{% if user.id == g.user.id%}
+<script src="{{url_for('users_bp.static', filename='favorites.js')}}"></script>
+{% else %}
+{% endif %}
+{% endblock %}

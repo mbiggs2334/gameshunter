@@ -1,0 +1,77 @@
+{% extends 'index/base.html' %}
+{% block title %}Inbox{% endblock %}
+{% block linktags %}
+<link rel="stylesheet" href="{{url_for('message_bp.static', filename='messages.css')}}">
+{{moment.include_moment()}}
+{% endblock %}
+{% block content%}
+<div class='gray'>
+    <div class="container pt-2 pb-5">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 mx-auto">
+                <h1 class='display-2 text-center mb-0'>Inbox</h1>
+                <hr class='mt-0 w-50 mx-auto'>
+                <div class='border border-dark rounded-3 shadow bg-dark'>
+                    {% if g.user.conversations and not (g.user.blocked_by or g.user.blocked) %}
+                        <div class="row m-0 text-light p-1 pt-1 border-bottom border-light">
+                            <div class=" col-4 col-sm-4 col-md-4 col-xl-3 p-0 d-inline-flex align-items-center justify-content-center">
+                                With
+                            </div>
+                            <div class="col border-start border-light p-0 d-inline-flex align-items-center justify-content-center">
+                                Message
+                            </div>
+                        </div>
+                        {% for conversation in g.user.conversations|sort(attribute='last_active', reverse=True) %}
+                            {% if (conversation.messages|count) > 0 %}
+                                {% if (conversation.started_by_user in g.user.blocked_by or g.user.blocked) or (conversation.received_by_user in g.user.blocked_by or g.user.blocked)%}
+                                {% else %}
+                                    <div class='row convo p-0 mx-0 flex-nowrap'>
+                                        <div class='col-4 col-sm-4 col-md-4 col-xl-3 d-inline-flex align-items-center justify-content-center p-0 darker-gray'>
+                                                {% if conversation.started_by_user.id == g.user.id %}
+                                                    <div><a class='link-light text-decoration-none' href="/users/{{conversation.received_by_user.id}}/profile">@{{conversation.received_by_user.username}}</a></div>
+                                                {% else %}
+                                                    <div><a class=' link-light text-decoration-none' href="/users/{{conversation.started_by_user.id}}/profile">@{{conversation.started_by_user.username}}</a></div>
+                                                {% endif %}
+                                        </div>
+                                        <a class='text-decoration-none text-dark col p-0 overflow-hidden' href="/messages/conversation/{{conversation.id}}">
+                                            <div class="inline-shadow border-dark border-start h-100 w-100 d-inline-flex flex-column justify-content-center dark-gray">
+                                                <div class='overflow-hidden'>
+                                                    <p class='ms-4 text-truncate my-0'>
+                                                        {% if conversation.messages[-1].sent_by_id == g.user.id %}
+                                                            You
+                                                        {% else %}
+                                                            {{conversation.messages[-1].sent_by.username}}
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                                <div class='text-light overflow-hidden'>
+                                                    <p class='ms-4 text-truncate my-0'>
+                                                        {{conversation.messages[-1].content}}
+                                                    </p>
+                                                    {% set x = namespace(total=0) %}
+                                                    {% for message in g.user.unseen_messages %}
+                                                        {% if message in conversation.messages%}
+                                                        {% set x.total = x.total + 1%}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="row pt-5 pb-4">
+                            <div class="col mx-auto">
+                                <h1 class='display-2 text-center text-light'>You don't have any messages.</h1>
+                                <hr>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'index/base.html' %}
+{% block title %}Conversation with {{other_user.username}}{% endblock %}
+{% block linktags %}
+<link rel="stylesheet" href="{{url_for('message_bp.static', filename='messages.css')}}">
+{{moment.include_moment()}}
+{% endblock %}
+{% block content%}
+<div class="gray">
+    <div class="container py-4 px-4">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 mx-auto p-0">
+                <div class="row m-0 p-0">
+                    <div class='dark-gray text-light rounded-top border border-dark py-2'>
+                        <h2 id='other_user' class='d-inline-block'><a class='link-light' href="/users/{{other_user.id}}/profile">@{{other_user.username}}</a></h2><span> started 12/13/2021</span>
+                    </div>
+                </div>
+                <div class="row m-0 p-0 border border-dark shadow-sm mb-0">
+                    <div id='message-box' style='max-height: 65vh;' class="col overflow-auto darker-gray pt-2">
+                        {% for message in conversation.messages %}
+                        {% if message.sent_by_id == g.user.id%}
+                            <div class="row m-0 p-0 message">
+                                <div class='d-inline-flex justify-content-end align-items-end flex-column'>
+                                    <span class='primary fw-bold fs-5 mb-1'>@{{g.user.username}}</span>
+                                    <p class='primary text-break m-0'>{{message.content}}</p>
+                                </div>
+                            </div>
+                        {% else %}
+                        <div class="row m-0 p-0 message align-items-center">
+                            <div class='d-inline-flex justify-content-start align-items-start flex-column'>
+                                <span class='secondary fw-bold fs-5 mb-1'>@{{other_user.username}}</span>
+                                <p class='secondary text-break m-0'>{{message.content}}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div style='height: 25px; width: 100%;' class='mx-auto row mb-3 p-0 dark-gray rounded-bottom border-top-0 border border-dark'>
+                    <div class="col mx-auto">
+                        <div id='user-typing' class='d-flex align-items-center'>
+                        </div>
+                    </div>
+                </div>
+                <form style='width: 75%;' class='mx-auto' method='POST'>
+                    {{form.hidden_tag()}}
+                    {% for field in form if field.widget.input_type != 'hidden' %}
+                        <div class='input-group shadow-sm mb-1'>
+                            {{field(class_='form-control border border-dark', placeholder_='Send a message...')}}
+                            <button style='width: 15%;' class='border border-dark btn btn-sm btn-primary'>Send</button>
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<input id='conversation' type='hidden' value='{{conversation.id}}'>
+<input id='g-user-id' type='hidden' value='{{g.user.id}}'>
+<input id='g-user-username' type='hidden' value='{{g.user.username}}'>
+<input id='other-user-id' type='hidden' value='{{other_user.id}}'>
+<input id='other-user-username' type='hidden' value='{{other_user.username}}'>
+{% endblock %}
+{% block scripttags %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script src="{{url_for('message_bp.static', filename='messages.js')}}"></script>
+{% endblock %}

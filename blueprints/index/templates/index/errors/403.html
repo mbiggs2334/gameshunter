@@ -1,0 +1,14 @@
+{% extends '/base.html' %}
+{% block title %}Error 403{% endblock %}
+{% block content%}
+<div class='darker-gray py-2 text-light'>
+    <h1 class='text-center display-1'>Nice try!</h1>
+    <h3 class='text-center'>You don't have permission for that!</h3>
+    <p class='mt-1 text-center mb-0 pt-5'>You'll automatically be <a href="/">redirected</a> in 10 seconds.</p>
+    <script>
+        setTimeout(function(){
+        window.location.href = '/';
+        }, 10000);
+    </script>
+</div>
+{% endblock %}

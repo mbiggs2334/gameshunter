@@ -1,0 +1,31 @@
+{% extends 'index/base.html' %}
+{% block title %}Report User{% endblock %}
+
+{% block content%}
+<div class="darker-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col p-4">
+                <div class='gray p-4'>
+                    <div>
+                        <p class='fs-5'>Please give as many details as possible about the situation, and we'll look into it.</p>
+                    </div>
+                    <form method='POST'>
+                        {{form.hidden_tag()}}
+                        {% for field in form if field.widget.input_type != 'hidden' %}
+                            <div class='form-floating mb-2'>
+                                {{field(class_='form-control rounded')}}
+                                {{field.label(class_='ms-2 form-label shadow-sm')}}
+                            </div>
+                        {% endfor %}
+                        <button class='btn btn-primary'>Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripttags %}
+<script src="{{url_for('users_bp.static', filename='report.js')}}"></script>
+{% endblock %}

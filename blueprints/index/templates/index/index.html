@@ -1,0 +1,61 @@
+{% extends 'index/base.html' %}
+{% block title %}GamesHunter{% endblock %}
+{% block linktags %}
+{{moment.include_moment()}}
+{% endblock %}
+{% block content%}
+<div class="darker-gray py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col px-4 py-3 mb-4">
+                        <div class='m-auto'>
+                            <img class='img-fluid' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/welcome.png" alt="A 'Welcome to games hunter image'">
+                            <hr class='text-light'>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row mb-5">
+                    <div class="col px-3">
+                        <h1 class='display-1 text-center text-light'>Most Popular Games</h1>
+                        <div id='card-group' class="card-group">
+                            {% for game in games %}
+                                <div class="card position-relative mx-1 bg-dark overflow-hidden rounded-3">
+                                    <a class='text-decoration-none text-light' href="/games/{{game.rawg_id}}">
+                                        <img style='height: 12vw; object-fit: cover;' src="{{game.background_img}}" class="card-img-top" alt="{{game.title}} image">
+                                        <span style='background-color: rgba(0,0,0,.5)' class="fs-3 text-center w-100 truncate-text-2 position-absolute bottom-0 rounded-3">{{game.title}}</span>
+                                    </a>
+                                  </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col px-3">
+                        <h1 class='display-1 text-center text-light'>Active Posts</h1>
+                        <div id='card-group' class="card-group">
+                            {% for post in posts %}
+                                <div class="card position-relative mx-1 bg-dark overflow-hidden rounded-3">
+                                    <a class='text-decoration-none text-dark' href="/forum/post/{{post.id}}">
+                                        <img style='height: 12vw; object-fit: cover;' src="{{post.game.background_img}}" class="card-img-top border-bottom border-dark" alt="{{post.game.title}} image">
+                                        <div class="card-body text-light">
+                                        <h5 class="card-title truncate-text-2 text-decoration-underline">{{post.title}}</h5>
+                                        <p class="card-text truncate-text-4">{{post.content}}</p>
+                                        <hr>
+                                        <p class="card-text position-absolute bottom-0 pb-1"><small class="text-light"><i class="far fa-comments"></i>&nbsp{{post.comments|count}}&nbsp&nbsp-&nbsp&nbsp {{moment(post.last_active).fromNow()}}</small></p>
+                                        </div>
+                                    </a>
+                                  </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+{% endblock %}
+{% block scripttags %}
+<script src="{{url_for('index_bp.static', filename='home_page.js')}}"></script>
+{% endblock %}

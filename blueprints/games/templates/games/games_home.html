@@ -1,0 +1,75 @@
+{% extends 'index/base.html' %}
+{% block title %}GamesHunter{% endblock %}
+{% block content%}
+<div class='darker-gray pb-4'>
+    <div class='container'>
+        {% if games %}
+        <div class="row px-4 py-4">
+            <img class='mx-auto d-block' src="static/images/game_p_header2.png" alt="Game Hunter game central header image">
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-9 col-xs-8 col-lg-9 mx-auto">
+                <form id='game-search'>
+                    <input class='fs-6 form-control hidden' placeholder="Search for a game..." type="text" name="game-search" id="game-search-input">
+                </form>
+                    <div id='no-results-div' class='d-none text-light mt-1'>
+                        No results for:&nbsp;&nbsp;
+                        <span id='no-results' class='fst-italic text-decoration-underline fs-5'>
+                        </span>
+                    </div>
+                    <div id='user-search-div' class='d-none text-light mt-1'>
+                        Showing results for:&nbsp;&nbsp;
+                        <span class='fst-italic text-decoration-underline fs-5' id='user-search'></span>
+                    </div>
+            </div>
+        </div>
+        <hr class='bg-light border border-light'>
+        <div class='row'>
+            <div class='col m-auto'>
+                <div id='all-games' class='d-flex flex-wrap justify-content-center'>
+                    
+                        {% for game in games %}
+                            <div id='{{game.id}}' data-game-cont='game-container'  class='light-round-all css-transitions-only-after-page-load shadow m-3 px-0 overflow-hidden'>
+                                <div style="background-image: url('{{game.background_image}}');
+                                background-position: center;
+                                background-size: cover;" 
+                                class='h-100 shadow '>
+                                    <div id='hide-' class='css-transitions-only-after-page-load black-half h-100 position-relative p-5' >
+                                        <div class='p-5'>
+                                            <h1 class='w-75 position-absolute top-5 text-center start-50 translate-middle-x text-light'>{{game['name']}}</h1>
+                                        </div>
+                                        <div class='p-5 position-relative'>
+                                            <div class='p-5'>
+                                                <a class='btn-outline-light btn btn-sm m-0 position-absolute bottom-0 start-0' href="/games/{{game.id}}">Game Details</a>
+                                                <form method='POST' action='/forum/post/new/{{game.id}}'>
+                                                    <input type="hidden" name='name' value='{{game.name}}'>
+                                                    <input type="hidden" name='background_image' value='{{game.background_image}}'>
+                                                    <input type="hidden" name='release_date' value='{{game.released}}'>
+                                                    <button class='btn-outline-light btn btn-sm m-0 position-absolute bottom-0 end-0' href="/games/news/{{game.id}}">Talk about it</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="row">
+                <div class="col dark-gray rounded-bottom shadow border-top border-dark">
+                    <h1 class='display-1 text-center text-light'>Looks like there's a problem.</h1>
+                    <p class='text-center text-light'>Cannot retrieve data from <a class='link-dark' target='_blank' href="https://rawg.io/">RAWG's</a> API. Please try again later.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+{% block scripttags %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ url_for('games_bp.static', filename='g_home.js')}}"></script>  
+{% endblock %}

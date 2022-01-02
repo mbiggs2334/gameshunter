@@ -1,0 +1,225 @@
+{% extends 'index/base.html' %}
+{% block title %}{{user.username}}'s Profile{% endblock %}
+{% block linktags %}
+<link rel="stylesheet" href="{{url_for('users_bp.static', filename='profile.css')}}">
+{{moment.include_moment()}}
+{% endblock %}
+{% block content %}
+<div class="darker-gray">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-7 rounded-3 dark-gray shadow border border-dark mx-auto">
+                <div class="row text-light">
+                    {% if user in g.user.blocked %}
+                        <div class="col-auto border-end border-dark p-0">
+                            <div class='central-blue p-2'>
+                                <img style='max-height: 65px;' class='img-fluid' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
+                                alt="Profile image for {{user.username}}">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <span>@{{user.username}}</span>
+                                </div>
+                                    <div class="col-auto p-2 pb-1">
+                                        <div class="dropdown">
+                                            <a href='#'
+                                            data-bs-toggle="dropdown" id="dropdownMenuButton3" aria-expanded="false">
+                                            <i class="fas fa-cog fs-5 text-darker-gray"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
+                                                <li>
+                                                    <a class="dropdown-item" href="/users/{{user.id}}/report">Report</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="/users/{{user.id}}/unblock">Unblock</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                            <hr class='mb-3'>
+                            </div>
+                        </div>
+                    {% else %}
+                    <div class="col-auto border-end border-dark p-0">
+                        {% if user.profile_image and user.profile_image_uploaded %}
+                            <div style='min-width: 155px; max-width: 155px;
+                            background-image: url("https://gamehunter.s3.us-east-2.amazonaws.com/users/{{user.id}}/profile.png");
+                            background-position: center; background-size: cover; background-repeat: no-repeat;' class='h-100'>
+                            </div>
+                        {% else %}
+                        <div style='min-width: 155px; max-width: 155px;' class='central-blue p-2 border-bottom border-dark'>
+                            <img  class='img-fluid' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
+                            alt="Profile image for {{user.username}}">
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col d-inline-flex align-items-center py-1">
+                                <span class='me-4 fs-5'>@{{user.username}}</span>
+                                {% if user.active %}
+                                    <i style='color: rgb(0, 202, 0)' class="fas fa-circle-notch fs-5 me-1 ms-auto""></i><span class='fs-6 no-highlight'> Active Now</span>
+                                {% else%}
+                                    <i style='color: rgb(255, 14, 14);' class="fas fa-circle-notch fs-5 me-1 ms-auto"></i> <span class='fs-6 no-highlight'>Last Seen - {{moment(user.last_active).fromNow()}}</span>
+                                {% endif %}
+                            </div>
+                            {% if user.id != g.user.id %}
+                                <div class="col-auto ps-0">
+                                    <div class="dropdown">
+                                        <a href='#'
+                                        data-bs-toggle="dropdown" id="dropdownMenuButton3" aria-expanded="false">
+                                        <i class="fas fa-cog fs-5 text-darker-gray"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end ps-0" aria-labelledby="dropdownMenuButton2">
+                                            <li>
+                                                <a class="dropdown-item" href="/users/{{user.id}}/report">Report</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/users/{{user.id}}/block">Block</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        <hr class='mb-2'>
+                        </div>
+                        {% if g.user.id != user.id %}
+                            <div class="row mb-1">
+                                    <div class='d-inline'>
+                                        {% if user in g.user.following %}
+                                            <a class='rounded border border-dark btn btn-sm btn-primary mb-1' href="/users/{{user.id}}/unfollow">Unfollow</a>
+                                        {% else %}
+                                            <a class='rounded border border-dark btn btn-sm btn-primary mb-1' href="/users/{{user.id}}/follow">Follow</a>
+                                        {% endif %}
+                                        {% if convo_id %}
+                                            <a class='rounded border border-dark btn btn-sm btn-primary mb-1' href="/messages/conversation/{{convo_id}}">Message</a>
+                                        {% else %}
+                                            <a class='rounded border border-dark btn btn-sm btn-primary mb-1' href="/messages/conversation/{{user.id}}/new">Message</a>
+                                        {% endif %}
+                                        <a class='rounded border border-dark btn btn-sm btn-info mb-1' href="/users/{{user.id}}/favorites">{{user.username}}'s Favorites</a>
+                                    </div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <h3>About me:</h3>
+                            <p class='text-break'>{{user.bio}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-top border-bottom border-dark">
+                    <div  style='cursor: pointer' id='post-nav' class="col text-center pt-1">
+                            <h4>Posts ({{user.posts|count}})</h4>
+                    </div>
+                    <div  style='cursor: pointer' id='following-nav' class="col text-center border-start border-end border-dark pt-1">
+                            <h4>Following ({{user.following|count}})</h4>
+                    </div>
+                    <div  style='cursor: pointer' id='follower-nav' class="col text-center pt-1">
+                        <h4>Followers ({{user.followers|count}})</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col gray">
+                            <div id='post-div' class='d-none m-3 mb-4'>
+                                {% if (user.posts|count) > 0 %}
+                                    {% for post in user.posts|sort(attribute='last_active') %}
+                                        <div class='row p-2 px-4'>
+                                            <a class='link-light d-inline fs-3 text-truncate' href="/forum/post/{{post.id}}">{{post.title}}</a>
+                                            <span class='d-inline'>about <a class='link-light' href="/games/{{post.game.rawg_id}}">{{post.game.title}}</a></span>
+                                            <p class='text-truncate'>{{post.content}}</p>
+                                        </div>
+                                        <hr class='mt-0 mb-2'>
+                                    {% endfor %}
+                                {% else %}
+                                    {% if user.id == g.user.id %}
+                                        <h2 class='display-3 text-center'>You don't have any posts.</h2>
+                                    {% else %}
+                                        <h2 class='display-3 text-center'>This user has no posts.</h2>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <div id='following-div' class='d-none m-3'>
+                                {% if (user.following|count) > 0 %}
+                                    <div class='d-flex justify-content-evenly flex-wrap align-items-center p-2'>
+                                        {% for following in user.following %}
+                                        <a class='link-dark p-0 text-center' href="/users/{{following.id}}/profile">
+                                            <div style='min-width: 138px; max-width: 138px' class='col'>
+                                                <div class="row m-0 p-0">
+                                                    <div class="col mx-auto p-0">
+                                                    {% if following.profile_image and following.profile_image_uploaded %}
+                                                        <div style='max-height: 75px; min-height: 75px;
+                                                        background-image: url("https://gamehunter.s3.us-east-2.amazonaws.com/users/{{following.id}}/profile.png");
+                                                        background-position: center; background-size: cover; background-repeat: no-repeat;' class='h-100'>
+                                                        </div>
+                                                    {% else %}
+                                                    <div class='central-blue p-2 border border-dark'>
+                                                        <img style='max-height: 75px; min-height: 75px;' class='img-fluid mx-auto d-block' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
+                                                        alt="Profile image for {{user.username}}">
+                                                    </div>
+                                                    {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="row m-0 p-0">
+                                                    <span class='text-center p-0'>{{following.username}}</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% if user.id == g.user.id %}
+                                        <h2 class='display-3 text-center'>You're not following anyone.</h2>
+                                    {% else %}
+                                        <h2 class='display-3 text-center'>This user is not following anyone.</h2>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <div id='follower-div' class='d-none m-3'>
+                                {% if (user.followers|count) > 0 %}
+                                        <div class='d-flex justify-content-evenly flex-wrap align-items-center p-2'>
+                                            {% for follower in user.followers %}
+                                            <a class='link-dark p-0 text-center m-0' href="/users/{{follower.id}}/profile">
+                                                <div style='min-width: 138px; max-width: 138px;' class='col'>
+                                                    <div class="row m-0 p-0">
+                                                        <div class="col mx-auto p-0">
+                                                        {% if follower.profile_image and follower.profile_image_uploaded %}
+                                                            <div style='max-height: 75px; min-height: 75px;
+                                                            background-image: url("https://gamehunter.s3.us-east-2.amazonaws.com/users/{{follower.id}}/profile.png");
+                                                            background-position: center; background-size: cover; background-repeat: no-repeat;' class='h-100'>
+                                                            </div>
+                                                        {% else %}
+                                                        <div class='central-blue p-2 border border-dark'>
+                                                            <img style='max-height: 75px; min-height: 75px;' class='img-fluid mx-auto d-block' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
+                                                            alt="Profile image for {{user.username}}">
+                                                        </div>
+                                                        {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    {{follower.username}}
+                                                </div>
+                                            </a>
+                                            {% endfor %}
+                                        </div>
+                                {% else %}
+                                    {% if user.id == g.user.id %}
+                                        <h2 class='display-3 text-center'>You don't have any followers.</h2>
+                                    {% else %}
+                                        <h2 class='display-3 text-center'>This user has no followers.</h2>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripttags %}
+<script src="{{url_for('users_bp.static', filename='profile.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'index/base.html' %}
+{% block title %}Forums{% endblock %}
+{% block linktags %}
+{{moment.include_moment()}}
+{% endblock %}
+{% block content%}
+<div class='darker-gray'>
+    <div class="container py-4">
+        <div class='row mb-4'>
+            <img src="{{url_for('forum_bp.static', filename='/images/lets_talk_about_it.png')}}" alt="Let's talk about it, header.">
+        </div>
+        <div class="row mx-0">
+            <div class="col-12 col-sm-12 col-md-10 col-lg-8 mx-auto pt-3 dark-gray border border-dark shadow rounded">
+                {% if posts %}
+                    {% for post in posts.items %}
+                    <div class="row">
+                        <div class='text-light col-2 border-end border-dark d-inline-flex justify-content-center flex-column'>
+                            <div class='d-inline-flex justify-content-center align-items-center'>
+                                <i class="far fa-comments"></i>
+                                <span class='d-block text-center'>&nbsp{{post.comments|count}}</span>
+                            </div>
+                            <span class='text-center'>
+                                <small>
+                                    <small>
+                                        {{moment(post.last_active).fromNow()}}
+                                    </small>
+                                </small>
+                            </span>
+                        </div>
+
+                        <div class='col overflow-hidden text-truncate text-light ms-2'>
+                            <a class='fs-3 link-light text-light' href="/forum/post/{{post.id}}">{{post.title}}</a>
+                            <span class='d-block text-dark'><a class='link-light' href="/users/profile/{{post.user.id}}">@{{post.user.username}}</a> posted {{moment(post.datetime_added).fromNow()}}</span>
+                        </div>
+                        
+                    </div>
+                    <hr class=''>
+                    {% endfor %}
+                    <div class="row my-3">
+                        <div class="col d-flex justify-content-evenly align-items-center">
+                            {% if posts.has_prev %}
+                                <span class=''>
+                                    <a class='link-light fs-5' href="/forum/{{posts.prev_num}}">< Previous</a>
+                                </span>
+                            {% endif %}
+                            {% if posts.has_next %}
+                                <span class=''>
+                                    <a class='link-light fs-5' href="/forum/{{posts.next_num}}">Next ></a>
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row border-bottom border-dark pb-1">
+                        <span class='display-3 ms-1 text-center'>There are no posts at this time.</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

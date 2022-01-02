@@ -1,0 +1,36 @@
+.convo {
+    min-height:75px !important;
+    max-height:75px !important;
+    border-bottom: 1px solid black !important;
+    margin-bottom: .25rem;
+}
+
+.convo:last-child {
+    border-bottom: none !important;
+    margin-bottom: 0rem !important;
+}
+
+.inline-shadow {
+    box-shadow: inset 3px 0 5px rgb(47, 47, 47) !important; 
+}
+
+.message {
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.message:last-child {
+    border: none !important;
+    padding-bottom: none !important;
+    margin-bottom: .25rem !important;
+}
+
+.primary {
+    color: rgb(100, 100, 255);
+}
+
+.secondary {
+    color: rgb(255, 100, 100);
+}
+

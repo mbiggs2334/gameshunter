@@ -1,0 +1,28 @@
+{% extends 'index/base.html' %}
+{% block title %}Submit a report{% endblock %}
+
+{% block content%}
+<div class="gray">
+    <div class="container py-4 px-4">
+        <div class="row">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-7 mx-auto">
+                <h1 class='display-2'>Having some thoughts?</h1>
+                <p>Think we can improve or just want to tell us something you're enjoying about the site? Enter your info below and let us know!</p>
+                <form method='POST'>
+                    {{form.hidden_tag()}}
+                    {% for field in form if field.widget.input_type != 'hidden' %}
+                        <div class='form-floating row m-0'>
+                            {{field(class_='form-control rounded shadow mb-3')}}
+                            {{field.label(class_='form-label shadow-sm')}}
+                        </div>
+                    {% endfor %}
+                    <button class='btn btn-primary border border-dark float-end'>Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripttags %}
+<script src="{{url_for('index_bp.static', filename='report_feedback.js')}}"></script>
+{% endblock %}

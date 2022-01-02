@@ -1,0 +1,157 @@
+{% extends 'index/base.html' %}
+{% block title %}Account Settings{% endblock %}
+{% block content%}
+<div class='darker-gray'>
+    <div class="container py-4">
+        <div class='row'>
+            <div class="col-12 col-md-12 col-lg-11 col-xl-10 col-xxl-9 mx-auto">
+                <div class="row" >
+
+                    
+                        <div class='col-4 col-lg-3 dark-gray p-0 d-none' id='side-nav'>
+                            <div class='d-flex flex-column justify-content-evenly align-items-center no-highlight'>
+                                <div class='my-2 fw-bolder text-decoration-underline link-light' data-as='edit-account-settings'>
+                                    <span class=' fs-5' href="#">Account Settings</span>
+                                </div>
+                                <div class='my-2 text-white-50' data-ep='edit-profile'>
+                                    <span class=' fs-5' href="#">Edit Profile</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col border-start border-dark gray'>
+                            <div class="row dark-gray p-0 py-2 mb-2 d-none" id='top-nav'>
+                                <div class='col text-center no-highlight fw-bolder text-decoration-underline link-light' data-as='account-settings'>
+                                    <span class='fs-4' href="#">Account Settings</span>
+                                </div>
+                                <div class='col text-center no-highlight border-start border-light text-white-50 ' data-ep='edit-profile'>
+                                    <span class='fs-4' href="#">Edit Profile</span>
+                                </div>
+                            </div>
+
+
+
+
+                            <div id='profile-settings' class='pb-3 d-none'>
+                                <div class="row">
+                                    <div class='col-11 col-md-10 m-auto'>
+                                    <h2 class='text-center display-4 mb-0'>Edit Profile</h2>
+                                        <hr class='mt-0 bg-dark border border-dark mb-4'>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-10 mx-auto">
+                                        <form method='POST' enctype="multipart/form-data">
+                                            {{ form.hidden_tag() }}
+                                            {% for field in form if field.widget.input_type != 'hidden' %}
+                                            {% if field.type == 'FileField' %}
+                                                <div class='row mb-3'>
+                                                    <div class='row mb-2 d-flex align-items-center'>
+                                                        <div class="col-auto p-0 m-0 ms-2">
+                                                            <img class='' src="/static/icons/tooltip.png" alt="Tooltip image" title='Image not showing up? Try clearing the cache on your browser!' width=20 height=20>
+                                                        </div>
+                                                        <div class="col">
+                                                            {% if g.user.profile_image and g.user.profile_image_uploaded %}
+                                                                <img class='border border-dark img-fluid' id="img" src="https://gamehunter.s3.us-east-2.amazonaws.com/users/{{g.user.id}}/profile.png"
+                                                                alt="Upload image for {{g.user.username}}" />
+                                                            {% else %}
+                                                                <img class='central-blue border border-dark img-fluid' id="img" src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
+                                                                alt="Upload image for {{g.user.username}}" />
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class='col align-items-center'>
+                                                        <div class='row m-0'>
+                                                            <div class='input-group input-group-sm row m-0 mb-2'>
+                                                                {{field.label(class_='input-group-text rounded shadow-sm')}}
+                                                                {{field(class_='form-control form-control-sm rounded shadow', accept_='image/*', onchange_='loadFile(event)')}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-0">
+                                                            <div class='col-auto m-auto'>
+                                                                <div class="form-check  px-3 form-switch light-round-all border border-dark darker-gray">
+                                                                    {% if g.user.profile_image and g.user.profile_image_uploaded %}
+                                                                        <div class="form-check form-switch">
+                                                                            <input class="border border-dark form-check-input shadow-sm" name='check' type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                                                            <label class="text-light form-check-label" for="flexSwitchCheckChecked">Enable Profile Image</label>
+                                                                        </div>
+                                                                    {% else%}
+                                                                        <div class="form-check form-switch">
+                                                                            <input class="border border-dark form-check-input shadow-sm" name='check' type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                                                                            <label class="text-light form-check-label" for="flexSwitchCheckChecked">Enable Profile Image</label>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class='bg-dark border border-dark'>
+
+                                            {% else %}
+                                                <div class='form-floating mb-2 row m-0'>
+                                                    {{field(class_='form-control rounded shadow mb-3')}}
+                                                    {{field.label(class_='form-label shadow-sm')}}
+                                                </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                            <div class='d-flex justify-content-end'>
+                                                <button class='me-2 btn btn-sm btn-primary border border-dark shadow'>Save Changes</button>
+                                                <a href='/users/profile/{{g.user.id}}' class='me-2 btn btn-sm nav-user-btn border border-dark shadow'>Go Back</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+                            <div id='account-settings' class=''>
+                                <div class="row">
+                                    <div class='col-11 col-md-10 m-auto'>
+                                    <h2 class='text-center display-4 mb-0'>Account Settings</h2>
+                                        <hr class='mt-0 bg-dark border border-dark mb-4'>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-4 pb-3">
+                                        <p><b>Email</b>: {{g.user.email}}</p>
+                                        <p><b>Date Joined</b>: {{g.user.date_joined}}</p>
+                                        <a class='btn btn-sm btn-primary' href="/users/account/password/edit">Change Password</a>
+                                        <a class='btn btn-sm nav-user-btn' href="/users/account/delete">Delete Account</a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripttags %}
+<script src="{{url_for('users_bp.static', filename='edit_profile.js')}}"></script>
+{% endblock %}
