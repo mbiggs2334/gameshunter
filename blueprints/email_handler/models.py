@@ -1,7 +1,7 @@
 from flask import url_for, g, session
-from ...app import mail
+from app import mail
 from flask_mail import Message
-from ...blueprints.authenticate_handler.models import SerializeEmail
+from blueprints.authenticate_handler.models import SerializeEmail
 import datetime
 
 

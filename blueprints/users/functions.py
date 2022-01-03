@@ -1,5 +1,5 @@
 from flask import flash, g, session
-from ...gamehunter.db import db
+from gamehunter.db import db
 from datetime import datetime
 from .models import User
 import threading

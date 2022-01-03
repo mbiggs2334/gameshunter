@@ -1,7 +1,7 @@
 from flask import session, redirect, flash, Markup, g
 from .models import MailHandler
-from ...blueprints.users.models import User
-from ...blueprints.blueprints import email_handler_bp
+from blueprints.users.models import User
+from blueprints.blueprints import email_handler_bp
 
 ##########################################################################################################################################
 

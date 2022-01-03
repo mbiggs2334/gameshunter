@@ -1,10 +1,10 @@
 from flask import render_template, redirect, request, flash, g, Markup, jsonify
-from ...gamehunter.db import db
+from gamehunter.db import db
 from .forms import NewPostForm, NewCommentForm
-from ...blueprints.games.models import Games
-from ...blueprints.api.models import RAWGioAPI
+from blueprints.games.models import Games
+from blueprints.api.models import RAWGioAPI
 from .models import Post, Comment, UpvoteComment, UpvotePost
-from ...blueprints.blueprints import forum_bp
+from blueprints.blueprints import forum_bp
 
 ##########################################################################################################################################
 

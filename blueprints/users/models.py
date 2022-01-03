@@ -1,8 +1,8 @@
 from flask import g, session, flash, current_app as app, request
-from ...gamehunter.db import db
+from gamehunter.db import db
 from datetime import datetime
 from flask_bcrypt import Bcrypt
-from ...blueprints.s3.models import S3Handler
+from blueprints.s3.models import S3Handler
 from sqlalchemy import UniqueConstraint, and_, or_
 from sqlalchemy.exc import IntegrityError
 import os

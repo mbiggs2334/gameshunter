@@ -1,39 +1,40 @@
-from flask import render_template, current_app as app
+from flask import render_template
+from app import app
 
 ##########################################################################################################################################
 
 @app.errorhandler(400)
-def page_not_found(error):
+def error_400(error):
     return render_template('index/errors/400.html'), 400
 
 ##########################################################################################################################################
 
 @app.errorhandler(401)
-def page_not_found(error):
-    return render_template('index/errors/401.html'), 401
+def error_401(error):
+    return render_template('index/errors/403.html'), 401
 
 ##########################################################################################################################################
 
 @app.errorhandler(403)
-def page_not_found(error):
+def error_403(error):
     return render_template('index/errors/403.html'), 403
 
 ##########################################################################################################################################
 
 @app.errorhandler(404)
-def page_not_found(error):
+def error_404(error):
     return render_template('index/errors/404.html'), 404
 
 ##########################################################################################################################################
 
 @app.errorhandler(405)
-def page_not_found(error):
+def error_405(error):
     return render_template('index/errors/405.html'), 405
 
 ##########################################################################################################################################
 
 @app.errorhandler(500)
-def page_not_found(error):
+def error_500(error):
     return render_template('index/errors/500.html'), 500
 
-##########################################################################################################################################
+#########################################################################################################################################

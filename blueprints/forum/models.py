@@ -1,5 +1,5 @@
 from flask import g
-from ...gamehunter.db import db
+from gamehunter.db import db
 from sqlalchemy import UniqueConstraint
 from datetime import datetime
 

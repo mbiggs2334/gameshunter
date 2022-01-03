@@ -1,10 +1,10 @@
 from flask import render_template, redirect, session, flash, g, Markup
-from ...blueprints.users.forms import EditPasswordEmailForm
-from ...blueprints.users.models import User
+from blueprints.users.forms import EditPasswordEmailForm
+from blueprints.users.models import User
 from .models import SerializeEmail
-from ...gamehunter.db import db
-from ...blueprints.users.functions import login
-from ...blueprints.blueprints import authenticate_bp
+from gamehunter.db import db
+from blueprints.users.functions import login
+from blueprints.blueprints import authenticate_bp
 
 ##########################################################################################################################################
 

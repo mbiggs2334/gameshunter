@@ -1,7 +1,7 @@
 from flask import flash, render_template, redirect, g
-from ...blueprints.users.models import User, Conversation, Message
+from blueprints.users.models import User, Conversation, Message
 from .forms import SendMessageForm
-from ...blueprints.blueprints import message_bp
+from blueprints.blueprints import message_bp
 
 ##########################################################################################################################################
 

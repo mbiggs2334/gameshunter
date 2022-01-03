@@ -1,9 +1,9 @@
 from flask import flash, redirect, render_template, g, request, jsonify
-from ...gamehunter.db import db
-from ...blueprints.api.models import RAWGioAPI
+from gamehunter.db import db
+from blueprints.api.models import RAWGioAPI
 from .models import Games
-from ...blueprints.users.models import FavoriteGames
-from ...blueprints.blueprints import games_bp
+from blueprints.users.models import FavoriteGames
+from blueprints.blueprints import games_bp
 
 ### An initial list of grabbed games from the RAWG API
 rawg_resp = RAWGioAPI.get_list_of_games()
