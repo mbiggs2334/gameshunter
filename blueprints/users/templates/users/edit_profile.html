@@ -47,7 +47,7 @@
                                                 <div class='row mb-3'>
                                                     <div class='row mb-2 d-flex align-items-center'>
                                                         <div class="col-auto p-0 m-0 ms-2">
-                                                            <img class='' src="/static/icons/tooltip.png" alt="Tooltip image" title='Image not showing up? Try clearing the cache on your browser!' width=20 height=20>
+                                                            <img class='' src="/static/icons/tooltip.png" alt="Tooltip image" title='Image not showing up? Try clearing the cache on your browser! Only .jpeg and .png files are accepted.' width=20 height=20>
                                                         </div>
                                                         <div class="col">
                                                             {% if g.user.profile_image and g.user.profile_image_uploaded %}
@@ -63,7 +63,7 @@
                                                         <div class='row m-0'>
                                                             <div class='input-group input-group-sm row m-0 mb-2'>
                                                                 {{field.label(class_='input-group-text rounded shadow-sm')}}
-                                                                {{field(class_='form-control form-control-sm rounded shadow', accept_='image/*', onchange_='loadFile(event)')}}
+                                                                {{field(class_='form-control form-control-sm rounded shadow', accept_='image/jpeg, image/png', onchange_='loadFile(event)')}}
                                                             </div>
                                                         </div>
                                                         <div class="row m-0">
