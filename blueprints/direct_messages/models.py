@@ -42,15 +42,6 @@ def user_join_room(data):
 
 
 ##########################################################################################################################################
- 
-@socketio.on('disconnect')
-def user_leave_room(data):
-    """Listens for when a user leaves the Direct Message conversation and removes them from the Live Chat room."""
-
-    channel = data['channel']
-    leave_room(channel)
-
-##########################################################################################################################################
 
 @socketio.on('user_active')
 def user_is_active(data):
