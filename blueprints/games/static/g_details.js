@@ -71,7 +71,7 @@ favForm.addEventListener('submit', e => {
 });
 
 async function addFavorites(id, name, image, rDate){
-    resp = await axios.get(`http://${window.location.host}/games/favorites/add?game_id=${id}&game_name=${name}&game_image=${image}&release_date=${rDate}`);
+    resp = await axios.get(`https://${window.location.host}/games/favorites/add?game_id=${id}&game_name=${name}&game_image=${image}&release_date=${rDate}`);
     $('#flashed_message').remove();
     $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
                                     <div class='text-center'>
@@ -87,7 +87,7 @@ async function addFavorites(id, name, image, rDate){
 };
 
 async function removeFavorites(id){
-    resp = await axios.get(`http://${window.location.host}/games/favorites/remove?game_id=${id}`);
+    resp = await axios.get(`https://${window.location.host}/games/favorites/remove?game_id=${id}`);
     $('#flashed_message').remove();
     $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
                                     <div class='text-center'>
@@ -102,7 +102,7 @@ async function removeFavorites(id){
 
 
 async function getNews(){
-    resp = await axios.get(`http://${window.location.host}/news/${gameName}`);
+    resp = await axios.get(`https://${window.location.host}/news/${gameName}`);
     if(resp.data.message === 'None'){
         return;
     } else {
