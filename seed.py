@@ -343,10 +343,10 @@ with app.app_context():
     Comment.create_new_comment(post=p21, content='Class aptent taciti sociosqu ad litora torquent per conubia nostra.')
 
     g.user = u10
-    Comment.create_new_comment(post=1, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
-    Comment.create_new_comment(post=8, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
-    Comment.create_new_comment(post=10, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
-    Comment.create_new_comment(post=6, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
-    Comment.create_new_comment(post=9, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
-    Comment.create_new_comment(post=17, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
+    Comment.create_new_comment(post=p1, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
+    Comment.create_new_comment(post=p8, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
+    Comment.create_new_comment(post=p10, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
+    Comment.create_new_comment(post=p6, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
+    Comment.create_new_comment(post=p9, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
+    Comment.create_new_comment(post=p17, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
 
