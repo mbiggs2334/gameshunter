@@ -238,6 +238,16 @@ with app.app_context():
                          content='Maecenas hendrerit volutpat libero. Donec condimentum sem quis lorem sodales, finibus sagittis turpis iaculis. Nulla at metus blandit, laoreet odio a, egestas leo. In lobortis congue justo, non malesuada diam ullamcorper sit amet. Cras libero quam, malesuada nec sem et, mattis sollicitudin augue.')
    
 with app.app_context():
+    u1 = User.query.get_or_404(1)
+    u2 = User.query.get_or_404(2)
+    u3 = User.query.get_or_404(3)
+    u4 = User.query.get_or_404(4)
+    u5 = User.query.get_or_404(5)
+    u6 = User.query.get_or_404(6)
+    u7 = User.query.get_or_404(7)
+    u8 = User.query.get_or_404(8)
+    u9 = User.query.get_or_404(9)
+    u10 = User.query.get_or_404(10)
     g.user = u1
     Comment.create_new_comment(post=p4, content='Nam ut nibh justo. Mauris vel magna dui.')
     Comment.create_new_comment(post=p5, content='Nam ut nibh justo. Mauris vel magna dui.')
