@@ -1,4 +1,4 @@
-from .gamehunter import db
+from gamehunter import db
 from app import app
 from flask import g
 from blueprints.users.models import User, Follow
