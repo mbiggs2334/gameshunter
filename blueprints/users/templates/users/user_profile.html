@@ -142,7 +142,7 @@
 
                             <div id='following-div' class='d-none m-3'>
                                 {% if (user.following|count) > 0 %}
-                                    <div class='d-flex justify-content-evenly flex-wrap align-items-center p-2'>
+                                    <div class='d-flex justify-content-between flex-wrap align-items-center p-2'>
                                         {% for following in user.following %}
                                         <a class='link-dark p-0 text-center' href="/users/{{following.id}}/profile">
                                             <div style='min-width: 138px; max-width: 138px' class='col'>
@@ -179,7 +179,7 @@
 
                             <div id='follower-div' class='d-none m-3'>
                                 {% if (user.followers|count) > 0 %}
-                                        <div class='d-flex justify-content-evenly flex-wrap align-items-center p-2'>
+                                        <div class='d-flex justify-content-between flex-wrap align-items-center p-2'>
                                             {% for follower in user.followers %}
                                             <a class='link-dark p-0 text-center m-0' href="/users/{{follower.id}}/profile">
                                                 <div style='min-width: 138px; max-width: 138px;' class='col'>
