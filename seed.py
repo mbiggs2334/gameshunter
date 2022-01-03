@@ -350,3 +350,5 @@ with app.app_context():
     Comment.create_new_comment(post=p9, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
     Comment.create_new_comment(post=p17, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
 
+with app.app_context():
+    g.user = None
