@@ -20,24 +20,34 @@ u9 = User.signup('upholdceiling', 'email9@email.com', 'nWbuGJX6ukNA')
 u10 = User.signup('rathercrystals', 'email10@email.com', 'nWbuGJX6ukNA')
 u1.profile_image = True
 u1.profile_image_uploaded = True
+u1.email_confirmed = True
 u2.profile_image = True
 u2.profile_image_uploaded = True
+u2.email_confirmed = True
 u3.profile_image = True
 u3.profile_image_uploaded = True
+u3.email_confirmed = True
 u4.profile_image = True
 u4.profile_image_uploaded = True
+u4.email_confirmed = True
 u5.profile_image = True
 u5.profile_image_uploaded = True
+u5.email_confirmed = True
 u6.profile_image = True
 u6.profile_image_uploaded = True
+u6.email_confirmed = True
 u7.profile_image = True
 u7.profile_image_uploaded = True
+u7.email_confirmed = True
 u8.profile_image = True
 u8.profile_image_uploaded = True
+u8.email_confirmed = True
 u9.profile_image = True
 u9.profile_image_uploaded = True
+u9.email_confirmed = True
 u10.profile_image = True
 u10.profile_image_uploaded = True
+u10.email_confirmed = True
 db.session.add(u1)
 db.session.add(u2)
 db.session.add(u3)
@@ -237,6 +247,8 @@ with app.app_context():
                          title='Mauris ac dolor lacinia ligula posuere aliquam',
                          content='Maecenas hendrerit volutpat libero. Donec condimentum sem quis lorem sodales, finibus sagittis turpis iaculis. Nulla at metus blandit, laoreet odio a, egestas leo. In lobortis congue justo, non malesuada diam ullamcorper sit amet. Cras libero quam, malesuada nec sem et, mattis sollicitudin augue.')
    
+   g.user = None
+   
 with app.app_context():
     u1 = User.query.get_or_404(1)
     u2 = User.query.get_or_404(2)
@@ -350,5 +362,7 @@ with app.app_context():
     Comment.create_new_comment(post=p9, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
     Comment.create_new_comment(post=p17, content='Nullam congue efficitur risus. Proin sodales ligula eget vulputate placerat.')
 
+    g.user = None
+    
 with app.app_context():
     g.user = None
