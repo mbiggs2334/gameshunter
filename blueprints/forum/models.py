@@ -35,7 +35,7 @@ class Post(db.Model):
     def create_new_post(self, game_id=None, title=None, content=None):
         """Accepts a Game ID and Form data to create a new Post and commit it to the DB.
         
-        Returns True on a successful Post creation, else returns False."""
+        Returns the new Post object on a successful Post creation, else returns False."""
 
         now = datetime.utcnow()
         new_post = Post(

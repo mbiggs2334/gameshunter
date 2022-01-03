@@ -1,7 +1,7 @@
 ##########################################################################################################################################
 
 def clean_and_seperate_search_terms(search_terms: str) -> str:
-    """Returns a string of the search terms serperated by a '_' character."""
+    """Returns a string of the search terms serperated by a '+' character."""
     
     search_terms = search_terms.strip().replace(' ', '+')
     return search_terms

@@ -260,8 +260,6 @@ class User(db.Model):
     email_confirmed = db.Column(db.Boolean, default=False, nullable=False)
 
     email_confirmed_on = db.Column(db.Date, nullable=True)
-
-    banned = db.Column(db.Boolean, nullable=False, default=False)
     
     favorites = db.relationship('FavoriteGames', cascade='all,delete')
     
