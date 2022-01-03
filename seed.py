@@ -247,7 +247,7 @@ with app.app_context():
                          title='Mauris ac dolor lacinia ligula posuere aliquam',
                          content='Maecenas hendrerit volutpat libero. Donec condimentum sem quis lorem sodales, finibus sagittis turpis iaculis. Nulla at metus blandit, laoreet odio a, egestas leo. In lobortis congue justo, non malesuada diam ullamcorper sit amet. Cras libero quam, malesuada nec sem et, mattis sollicitudin augue.')
    
-   g.user = None
+    g.user = None
    
 with app.app_context():
     u1 = User.query.get_or_404(1)
