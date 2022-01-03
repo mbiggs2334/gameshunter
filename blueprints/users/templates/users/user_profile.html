@@ -181,7 +181,7 @@
                                 {% if (user.followers|count) > 0 %}
                                         <div class='d-flex justify-content-evenly flex-wrap align-items-center p-2'>
                                             {% for follower in user.followers %}
-                                            <a class='link-dark p-0 m-2 mb-5 text-center border border-dark' href="/users/{{follower.id}}/profile">
+                                            <a class='link-dark p-0 m-2 mb-5 text-center' href="/users/{{follower.id}}/profile">
                                                 <div style='min-width: 138px; max-width: 138px;' class='col'>
                                                     <div class="row m-0 p-0">
                                                         <div class="col mx-auto p-0">
