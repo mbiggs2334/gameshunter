@@ -30,7 +30,7 @@ class S3Handler():
         
         s3_resource.meta.client.upload_file(file, bucket, key)
     
-        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], 'profile.png'))
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], f'{user_id}profile.png'))
         
 
 ##########################################################################################################################################
