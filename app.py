@@ -16,7 +16,7 @@ import datetime
 CORS(app)
 moment = Moment(app)
 mail = Mail(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app=app, async_mode='gevent')
 
 ### imports blueprints
 from blueprints.blueprints import authenticate_bp, message_bp, index_bp, email_handler_bp, forum_bp, games_bp, news_bp, users_bp
