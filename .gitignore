@@ -1,2 +1,16 @@
 venv/
+__pycache__/
+blueprints/__pycache__/
+blueprint/api/__pycache__/
+blueprint/authenticate_handler/__pycache__/
+blueprint/direct_messages/__pycache__/
+blueprint/email_handler/__pycache__/
+blueprint/error_handler/__pycache__/
+blueprint/forum/__pycache__/
+blueprint/games/__pycache__/
+blueprint/index/__pycache__/
+blueprint/news/__pycache__/
+blueprint/s3/__pycache__/
+blueprint/users/__pycache__/
+blueprint/web_scraper/__pycache__/
 gamehunter/config.cfg
