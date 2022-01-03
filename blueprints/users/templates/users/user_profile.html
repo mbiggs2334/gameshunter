@@ -142,9 +142,9 @@
 
                             <div id='following-div' class='d-none m-3'>
                                 {% if (user.following|count) > 0 %}
-                                    <div class='d-flex justify-content-evenly flex-wrap align-items-center p-2'>
+                                    <div class='d-flex justify-content-around flex-wrap align-items-center p-2'>
                                         {% for following in user.following %}
-                                        <a class='link-dark p-0 text-center' href="/users/{{following.id}}/profile">
+                                        <a class='link-dark p-0 m-2 mb-3 text-center' href="/users/{{following.id}}/profile">
                                             <div style='min-width: 138px; max-width: 138px' class='col'>
                                                 <div class="row m-0 p-0">
                                                     <div class="col mx-auto p-0">
@@ -154,7 +154,7 @@
                                                         background-position: center; background-size: cover; background-repeat: no-repeat;' class='h-100'>
                                                         </div>
                                                     {% else %}
-                                                    <div class='central-blue p-2 border border-dark'>
+                                                    <div class='central-blue p-2'>
                                                         <img style='max-height: 75px; min-height: 75px;' class='img-fluid mx-auto d-block' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
                                                         alt="Profile image for {{user.username}}">
                                                     </div>
@@ -181,7 +181,7 @@
                                 {% if (user.followers|count) > 0 %}
                                         <div class='d-flex justify-content-evenly flex-wrap align-items-center p-2'>
                                             {% for follower in user.followers %}
-                                            <a class='link-dark p-0 text-center m-2' href="/users/{{follower.id}}/profile">
+                                            <a class='link-dark p-0 m-2 mb-5 text-center border border-dark' href="/users/{{follower.id}}/profile">
                                                 <div style='min-width: 138px; max-width: 138px;' class='col'>
                                                     <div class="row m-0 p-0">
                                                         <div class="col mx-auto p-0">

@@ -1,6 +1,6 @@
 import requests, json
-from app import app
-from blueprints.web_scraper.functions import clean_and_seperate_search_terms
+from ...app import app
+from ...blueprints.web_scraper.functions import clean_and_seperate_search_terms
 
 class GetSteamNews():
     """A class designed to reach out to the Steam API and grab news articles"""

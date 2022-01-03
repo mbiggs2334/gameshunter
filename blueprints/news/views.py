@@ -1,7 +1,7 @@
 from flask.json import jsonify
-from blueprints.api.models import GetSteamNews
-from blueprints.web_scraper.models import WebScraper
-from blueprints.blueprints import news_bp
+from ...blueprints.api.models import GetSteamNews
+from ...blueprints.web_scraper.models import WebScraper
+from ...blueprints.blueprints import news_bp
 
 ##########################################################################################################################################
 

@@ -1,8 +1,8 @@
 from flask import redirect, flash
-from gamehunter.db import db
-from app import socketio
+from ...gamehunter.db import db
+from ...app import socketio
 from flask_socketio import join_room, leave_room
-from blueprints.users.models import Message
+from ...blueprints.users.models import Message
 
 ##########################################################################################################################################
 

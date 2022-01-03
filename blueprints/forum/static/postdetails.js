@@ -1,7 +1,6 @@
 let comments = document.querySelectorAll('[data-comment]');
 for (let comment of comments){
     comment.addEventListener('click', e => {
-        e.preventDefault;
         if(e.target.dataset['plusComment']){
             upvoteComment(e, comment.id);
         }
@@ -13,6 +12,9 @@ for (let comment of comments){
         };
         if(e.target.type === 'submit'){
             postCommentChange(comment.id)
+        }
+        if(e.target.type === ""){
+            window.location.href = e.target.href
         }
     });
 };

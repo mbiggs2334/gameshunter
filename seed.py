@@ -1,9 +1,9 @@
-from gamehunter import db
-from app import app
+from .gamehunter import db
+from .app import app
 from flask import g
-from blueprints.users.models import User, Follow
-from blueprints.games.models import Games
-from blueprints.forum.models import Post, Comment
+from .blueprints.users.models import User, Follow
+from .blueprints.games.models import Games
+from .blueprints.forum.models import Post, Comment
 
 db.drop_all()
 db.create_all()

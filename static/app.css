@@ -299,3 +299,20 @@ nav li a::after {
     transform: scale(1, 1);
     transition: .2s;
   }
+
+  .nav-link-hover:hover {
+      color: black;
+      background-color:white;
+      font-size: 1.1rem;
+      padding: 2px;
+      padding-bottom: 4px;
+      transition: .5s
+  }
+
+  .nav-link-hover:not(:hover) {
+      color: white;
+      background-color:none;
+      font-size: 1rem;
+      padding: 0px;
+      transition: .3s
+  }

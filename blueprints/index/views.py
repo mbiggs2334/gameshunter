@@ -1,8 +1,8 @@
 from flask import render_template, redirect, session
 from .forms import Feedback_Report_Form
-from blueprints.blueprints import index_bp
-from blueprints.games.models import Games
-from blueprints.forum.models import Post
+from ...blueprints.blueprints import index_bp
+from ...blueprints.games.models import Games
+from ...blueprints.forum.models import Post
 
 ##########################################################################################################################################
 
