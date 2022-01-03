@@ -1,6 +1,9 @@
 from flask import flash, g, session
 from gamehunter.db import db
 from datetime import datetime
+from .models import User
+import threading
+from sqlalchemy import and_
 
 ##########################################################################################################################################
 
@@ -40,4 +43,17 @@ def logout():
     session.pop('curr_user')
     
     
+##########################################################################################################################################
+
+def update_user_active_status():
+    threading.Timer(150.0, lambda: update_user_active_status()).start()
+    five_min_ago = datetime.datetime.utcnow() - datetime.timedelta(minutes=5)
+    users = User.query.filter(and_(User.last_active < five_min_ago, User.active == True)).all()
+    if(len(users) > 0):
+        for user in users: 
+            user.active = False
+            db.session.add(user)
+        db.session.commit()
+        
+
 ##########################################################################################################################################
