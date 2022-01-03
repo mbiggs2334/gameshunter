@@ -1,5 +1,4 @@
 from flask_wtf import FlaskForm
-import flask_wtf
 from wtforms import EmailField
 from wtforms.fields.simple import TextAreaField
 from wtforms.validators import InputRequired, Length

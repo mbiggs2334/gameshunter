@@ -2,9 +2,9 @@ from flask import Flask
 from .db import db
 import os
 
-
-
 def create_app():
+    """Creates an app and sets up app config."""
+    
     app = Flask(__name__,
                 static_folder='../static')
     app.config.from_pyfile('config.cfg')
@@ -18,10 +18,8 @@ def create_app():
 
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # app.config['SQLALCHEMY_ECHO'] = True
     
     db.app = app
     db.init_app(app)
-
     
     return app

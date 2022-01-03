@@ -1,4 +1,4 @@
-from flask import g, flash
+from flask import g
 from gamehunter.db import db
 from sqlalchemy import UniqueConstraint
 from datetime import datetime

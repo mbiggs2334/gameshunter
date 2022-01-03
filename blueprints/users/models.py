@@ -4,7 +4,6 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from blueprints.s3.models import S3Handler
 from sqlalchemy import UniqueConstraint, and_, or_
-from sqlalchemy.orm import aliased
 from sqlalchemy.exc import IntegrityError
 import os
 from werkzeug.utils import secure_filename

@@ -1,5 +1,4 @@
-from flask import flash, render_template, g, session
-from .forms import EditPasswordForm
+from flask import flash, g, session
 from gamehunter.db import db
 from datetime import datetime
 
