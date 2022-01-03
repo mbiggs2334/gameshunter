@@ -52,4 +52,3 @@ def add_user_to_global():
 
 if __name__ == '__main__':
     socketio.run(app)
-    
