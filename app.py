@@ -50,8 +50,8 @@ def add_user_to_global():
     else:
         g.user = None
 
-from blueprints.users.functions import update_user_active_status
-threading.Timer(3.0, lambda: update_user_active_status).start()
+# from blueprints.users.functions import update_user_active_status
+# threading.Timer(3.0, lambda: update_user_active_status).start()
 
 # Starts SocketIO.
 if __name__ == '__main__':
