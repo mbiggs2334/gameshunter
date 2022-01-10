@@ -1,4 +1,5 @@
 from gamehunter import db
+from datetime import datetime
 from app import app
 from flask import g
 from blueprints.users.models import User, Follow
@@ -7,6 +8,8 @@ from blueprints.forum.models import Post, Comment
 
 db.drop_all()
 db.create_all()
+
+now = datetime.utcnow()
 
 u1 = User.signup('digitortn', 'email1@email.com', 'nWbuGJX6ukNA')
 u2 = User.signup('pretzelsblurt', 'email2@email.com', 'nWbuGJX6ukNA')
@@ -21,33 +24,43 @@ u10 = User.signup('rathercrystals', 'email10@email.com', 'nWbuGJX6ukNA')
 u1.profile_image = True
 u1.profile_image_uploaded = True
 u1.email_confirmed = True
+u1.last_active = now
 u2.profile_image = True
 u2.profile_image_uploaded = True
 u2.email_confirmed = True
+u2.last_active = now
 u3.profile_image = True
 u3.profile_image_uploaded = True
 u3.email_confirmed = True
+u3.last_active = now
 u4.profile_image = True
 u4.profile_image_uploaded = True
 u4.email_confirmed = True
+u4.last_active = now
 u5.profile_image = True
 u5.profile_image_uploaded = True
 u5.email_confirmed = True
+u5.last_active = now
 u6.profile_image = True
 u6.profile_image_uploaded = True
 u6.email_confirmed = True
+u6.last_active = now
 u7.profile_image = True
 u7.profile_image_uploaded = True
 u7.email_confirmed = True
+u7.last_active = now
 u8.profile_image = True
 u8.profile_image_uploaded = True
 u8.email_confirmed = True
+u8.last_active = now
 u9.profile_image = True
 u9.profile_image_uploaded = True
 u9.email_confirmed = True
+u9.last_active = now
 u10.profile_image = True
 u10.profile_image_uploaded = True
 u10.email_confirmed = True
+u10.last_active = now
 db.session.add(u1)
 db.session.add(u2)
 db.session.add(u3)
