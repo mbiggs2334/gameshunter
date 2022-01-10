@@ -1,4 +1,7 @@
 from gamehunter import db
+db.drop_all()
+db.create_all()
+
 from datetime import datetime
 from app import app
 from flask import g
@@ -6,8 +9,7 @@ from blueprints.users.models import User, Follow
 from blueprints.games.models import Games
 from blueprints.forum.models import Post, Comment
 
-db.drop_all()
-db.create_all()
+
 
 now = datetime.utcnow()
 
