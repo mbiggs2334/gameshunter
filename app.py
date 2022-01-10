@@ -11,7 +11,7 @@ from flask import session, g
 from flask_cors import CORS
 from flask_moment import Moment
 from datetime import timedelta
-import datetime
+import datetime, threading
 import gevent
 
 CORS(app)
@@ -51,7 +51,7 @@ def add_user_to_global():
         g.user = None
 
 from blueprints.users.functions import update_user_active_status
-update_user_active_status()
+threading.Timer(3.0, lambda: update_user_active_status).start()
 
 # Starts SocketIO.
 if __name__ == '__main__':
