@@ -1,9 +1,10 @@
 from flask import render_template, redirect, request, flash, g, Markup, jsonify
+from requests.api import post
 from gamehunter.db import db
 from .forms import NewPostForm, NewCommentForm
 from blueprints.games.models import Games
 from blueprints.api.models import RAWGioAPI
-from .models import Post, Comment, UpvoteComment, UpvotePost
+from .models import Post, Comment, UpvotePost, UpvoteComment, DownvoteComment, DownvotePost
 from blueprints.blueprints import forum_bp
 
 ##########################################################################################################################################
@@ -103,7 +104,7 @@ def post_details(post_id):
 
 ##########################################################################################################################################
 
-@forum_bp.route('/comment/<int:comment_id>/like')
+@forum_bp.route('/comment/<int:comment_id>/like/add')
 def add_comment_like(comment_id):
     """Endpoint to create a new UpvoteComment. 
     
@@ -124,7 +125,7 @@ def add_comment_like(comment_id):
 
 ##########################################################################################################################################
     
-@forum_bp.route('/comment/<int:comment_id>/unlike')
+@forum_bp.route('/comment/<int:comment_id>/like/remove')
 def remove_comment_like(comment_id):
     """Endpoint to 'Unlike' a comment.
     
@@ -135,21 +136,63 @@ def remove_comment_like(comment_id):
     if not g.user:
         return jsonify(dict(message='You need to be logged in to do that.', category='danger'))
     
-    upvote = UpvoteComment.query.filter(UpvoteComment.user_id==g.user.id, UpvoteComment.comment_id==comment_id).first()
+    like_removed = UpvoteComment.remove_comment_upvote(comment_id=comment_id)
     
-    db.session.delete(upvote)
-    
-    try:
-        db.session.commit()
-    except:
+    if like_removed:
+        return jsonify(dict(message='Remove Successful.'))
+    else:
         return jsonify(dict(message='Something went wrong.'))
     
-    return jsonify(dict(message='Remove Successful.'))
 
 
 ##########################################################################################################################################
     
-@forum_bp.route('/post/<int:post_id>/like')
+@forum_bp.route('/comment/<int:comment_id>/dislike/add')
+def add_comment_dislike(comment_id):
+    """Endpoint to add a Downvote to a comment.
+    
+    Will accept a Comment ID and remove the UpvoteComment from the DB.
+    
+    Returns JSON."""
+    
+    if not g.user:
+        return jsonify(dict(message='You need to be logged in to do that.', category='danger'))
+    
+    dislike_added = DownvoteComment.create_new_comment_downvote(comment_id=comment_id)
+    
+    
+    if dislike_added:
+        return jsonify(dict(message='Remove Successful.'))
+    else:
+        return jsonify(dict(message='Something went wrong.'))
+    
+
+
+##########################################################################################################################################
+    
+@forum_bp.route('/comment/<int:comment_id>/dislike/remove')
+def remove_comment_dislike(comment_id):
+    """Endpoint to remove a Downvote from a comment.
+    
+    Will accept a Comment ID and remove the UpvoteComment from the DB.
+    
+    Returns JSON."""
+    
+    if not g.user:
+        return jsonify(dict(message='You need to be logged in to do that.', category='danger'))
+    
+    dislike_removed = DownvoteComment.remove_comment_downvote(comment_id=comment_id)
+    
+    if dislike_removed:
+        return jsonify(dict(message='Remove Successful.'))
+    else:
+        return jsonify(dict(message='Something went wrong.'))
+    
+
+
+##########################################################################################################################################
+    
+@forum_bp.route('/post/<int:post_id>/like/add')
 def add_post_like(post_id):
     """Endpoint to create a new UpvotePost. 
     
@@ -165,14 +208,35 @@ def add_post_like(post_id):
     if new_like:
         return jsonify(dict(message='Add Successful.'))
     else:
-        return jsonify(dict(message='Something went wrong.'))
+        return jsonify(dict(message='Something went wrong.', category='danger'))
 
 
 ##########################################################################################################################################
     
-@forum_bp.route('/post/<int:post_id>/unlike')
+@forum_bp.route('/post/<int:post_id>/like/remove')
 def remove_post_like(post_id):
-    """Endpoint to 'Unlike' a Post.
+    """Endpoint to create a new UpvotePost. 
+    
+    Accepts a Post ID and will create a new UpvotePost instance and commit it to the DB.
+    
+    Returns JSON."""
+    
+    if not g.user:
+        return jsonify(dict(message='You need to be logged in to do that.', category='danger'))
+    
+    like_removed = UpvotePost.remove_post_upvote(post_id=post_id)
+    
+    if like_removed:
+            return jsonify(dict(message='Remove Successful.'))
+    else:
+        return jsonify(dict(message='Something went wrong2', category='danger'))
+
+
+##########################################################################################################################################
+    
+@forum_bp.route('/post/<int:post_id>/dislike/add')
+def add_post_dislike(post_id):
+    """Endpoint to add a Dislike to a Post.
     
     Will accept a Post ID and remove the UpvotePost from the DB.
     
@@ -181,16 +245,34 @@ def remove_post_like(post_id):
     if not g.user:
         return jsonify(dict(message='You need to be logged in to do that.', category='danger'))
     
-    upvote = UpvotePost.query.filter(UpvotePost.user_id==g.user.id, UpvotePost.post_id==post_id).first()
+    new_dislike = DownvotePost.create_new_post_downvote(post_id=post_id)
+
     
-    db.session.delete(upvote)
+    if new_dislike:
+        return jsonify(dict(message='Remove Successful.'))
+    else:
+        return jsonify(dict(message='Something went wrong.', category='danger'))
+        
     
-    try:
-        db.session.commit()
-    except:
-        return jsonify(dict(message='Something went wrong.'))
+##########################################################################################################################################
     
-    return jsonify(dict(message='Remove Successful.'))
+@forum_bp.route('/post/<int:post_id>/dislike/remove')
+def remove_post_dislike(post_id):
+    """Endpoint to remove a Dislike to a Post.
+    
+    Will accept a Post ID and remove the UpvotePost from the DB.
+    
+    Returns JSON."""
+    
+    if not g.user:
+        return jsonify(dict(message='You need to be logged in to do that.', category='danger'))
+    
+    removed_dislike = DownvotePost.remove_post_downvote(post_id=post_id)
+    
+    if removed_dislike:
+        return jsonify(dict(message='Remove Successful.'))
+    else:
+        return jsonify(dict(message='Something went wrong.', category='danger'))
 
 
 ##########################################################################################################################################
@@ -299,6 +381,3 @@ def edit_comment(comment_id):
         return jsonify(dict(message='Success', content=request.args['content']))
     else:
         return jsonify(dict(message='Something went wrong. Please try again later.', category='danger' ))
-
-
-##########################################################################################################################################

@@ -11,13 +11,27 @@ for (let comment of comments){
             editComment(e, comment.id);
         };
         if(e.target.type === 'submit'){
-            postCommentChange(comment.id)
-        }
+            postCommentChange(comment.id);
+        };
         if(e.target.type === ""){
-            window.location.href = e.target.href
-        }
+            window.location.href = e.target.href;
+        };
     });
 };
+
+
+
+$('#user-post-controls').mouseenter(() => {
+    $('#user-post-controls-arrow').removeClass('fa-chevron-left');
+    $('#user-post-controls-arrow').addClass('fa-chevron-right');
+    document.getElementById('user-post-controls').style.transform = 'translateX(0px)';
+}).mouseleave(() => {
+    $('#user-post-controls-arrow').removeClass('fa-chevron-right');
+    $('#user-post-controls-arrow').addClass('fa-chevron-left');
+    document.getElementById('user-post-controls').style.transform = 'translateX(80px)';
+});
+
+
 
 $("textarea").each(function () {
     this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
@@ -30,39 +44,103 @@ let textArea = document.querySelector('textarea')
     textArea.style.maxHeight = '500px';
     textArea.style.whiteSpace = 'pre-wrap';
 
+
+
 async function upvoteComment(event, id){
-    resp = await axios.get(`http://${window.location.host}/forum/comment/${id}/like`);
-    if (resp.data.message === 'Add Successful.') {
-        let counter = event.target.nextElementSibling;
-        event.target.remove();
-        $(`#${id}-counter-box`).prepend(`<i data-minus-comment='minus-upvote' class="fas fa-minus fs-5"></i>`);
+    let counter = event.target.nextElementSibling;
+    let originalValue = parseInt(counter.innerText);
+    if($(`#${id} #minus-comment`).hasClass('red-text')){
         counter.innerText = parseInt(counter.innerText) + 1;
     };
-    if (resp.data.category === 'danger'){
-        $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
-                                        <div class='text-center'>
-                                            ${resp.data.message}
-                                        </div>
-                                        </div>`);
+    if($(`#${id} #plus-comment`).hasClass('central-blue-text')){
+        alreadyUpvotedComment(id, originalValue, counter);
+    } else {
+        freshUpvotedComment(id, originalValue, counter);
     };
 };
 
-async function downvoteComment(event, id){
-    resp = await axios.get(`http://${window.location.host}/forum/comment/${id}/unlike`);
-    if (resp.data.message === 'Remove Successful.') {
-        let counter = event.target.nextElementSibling;
-        event.target.remove();
-        $(`#${id}-counter-box`).prepend(`<i data-plus-comment='plus-upvote' class="fas fa-plus fs-5"></i>`);
+
+async function alreadyUpvotedComment(id, originalValue, counter){
         counter.innerText = parseInt(counter.innerText) - 1;
+        $(`#${id} #plus-comment`).removeClass('central-blue-text');
+        $(`#${id} #minus-comment`).removeClass('red-text');
+        resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/like/remove`);
+        $('#flashed_message').remove();
+        if (resp.data.category === 'danger'){
+            $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
+                                            <div class='text-center'>
+                                                ${resp.data.message}
+                                            </div>
+                                            </div>`);
+            counter.innerText = originalValue
+            $(`#${id} #plus-comment`).addClass('central-blue-text');
+        };
+};
+
+async function freshUpvotedComment(id, originalValue, counter){
+        counter.innerText = parseInt(counter.innerText) + 1;
+        $(`#${id} #plus-comment`).addClass('central-blue-text');
+        $(`#${id} #minus-comment`).removeClass('red-text');
+        resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/like/add`);
+        if (resp.data.category === 'danger'){
+            $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
+                                            <div class='text-center'>
+                                                ${resp.data.message}
+                                            </div>
+                                            </div>`);
+            counter.innerText = originalValue
+            $(`#${id} #plus-comment`).removeClass('central-blue-text');
+        };
+};
+
+async function downvoteComment(event, id){
+    let counter = event.target.previousElementSibling;
+    let originalValue = parseInt(counter.innerText);
+    if($(`#${id} #plus-comment`).hasClass('central-blue-text')){
+        counter.innerText = parseInt(counter.innerText) - 1;
+    }
+    if($(`#${id} #minus-comment`).hasClass('red-text')){
+        alreadyDownVotedComment(id, originalValue, counter);
+    } else {
+        freshDownVoteComment(id, originalValue, counter);
     };
+};
+
+async function alreadyDownVotedComment(id, originalValue, counter){
+    counter.innerText = parseInt(counter.innerText) + 1;
+    $(`#${id} #minus-comment`).removeClass('red-text');
+    $(`#${id} #plus-comment`).removeClass('central-blue-text');
+    resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/dislike/remove`);
+    $('#flashed_message').remove();
     if (resp.data.category === 'danger'){
         $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
                                         <div class='text-center'>
                                             ${resp.data.message}
                                         </div>
                                         </div>`);
+        counter.innerText = originalValue;
+        $(`#${id} #minus-comment`).addClass('red-text');
     };
 };
+
+async function freshDownVoteComment(id, originalValue, counter){
+        counter.innerText = parseInt(counter.innerText) - 1;
+        $(`#${id} #minus-comment`).addClass('red-text');
+        $(`#${id} #plus-comment`).removeClass('central-blue-text');
+        resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/dislike/add`);
+        $('#flashed_message').remove();
+        if (resp.data.category === 'danger'){
+            $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
+                                            <div class='text-center'>
+                                                ${resp.data.message}
+                                            </div>
+                                            </div>`);
+        counter.innerText = originalValue;
+        $(`#${id} #minus-comment`).removeClass('red-text');
+        };
+};
+
+
 
 document.getElementById('post-counter').addEventListener('click', e => {
     e.preventDefault();
@@ -75,39 +153,90 @@ document.getElementById('post-counter').addEventListener('click', e => {
     };
 });
 
+
+
 async function upvotePost(event, id){
-    resp = await axios.get(`http://${window.location.host}/forum/post/${id}/like`);
-    if (resp.data.message === 'Add Successful.') {
-        let counter = event.target.previousElementSibling;
-        event.target.remove();
-        $(`#post-counter`).append(`<i data-minus-post='minus-upvote' class="fas fa-minus fs-5"></i>`);
+    let counter = event.target.nextElementSibling;
+    let originalValue = parseInt(counter.innerText);
+    if($('#minus-post').hasClass('red-text')){
         counter.innerText = parseInt(counter.innerText) + 1;
-    }
-    if (resp.data.category === 'danger'){
-        $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
+    };
+    if($('#plus-post').hasClass('central-blue-text')){
+        counter.innerText = parseInt(counter.innerText) - 1;
+        $('#plus-post').removeClass('central-blue-text');
+        $('#minus-post').removeClass('red-text');
+        resp = await axios.get(`https://${window.location.host}/forum/post/${id}/like/remove`);
+        $('#flashed_message').remove();
+        if (resp.data.category === 'danger'){
+            $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
                                         <div class='text-center'>
                                             ${resp.data.message}
                                         </div>
                                         </div>`);
+            counter.innerText = originalValue;
+            $('#plus-post').addClass('central-blue-text');
+        };
+    } else {
+        counter.innerText = parseInt(counter.innerText) + 1;
+        $('#plus-post').addClass('central-blue-text');
+        $('#minus-post').removeClass('red-text');
+        resp = await axios.get(`https://${window.location.host}/forum/post/${id}/like/add`);
+        $('#flashed_message').remove();
+        if (resp.data.category === 'danger'){
+            $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
+                                        <div class='text-center'>
+                                            ${resp.data.message}
+                                        </div>
+                                        </div>`);
+            counter.innerText = originalValue;
+            $('#plus-post').removeClass('central-blue-text');
+        };
     };
 };
 
+
+
 async function downvotePost(event, id){
-    resp = await axios.get(`http://${window.location.host}/forum/post/${id}/unlike`);
-    if (resp.data.message === 'Remove Successful.') {
-        let counter = event.target.previousElementSibling;
-        event.target.remove();
-        $(`#post-counter`).append(`<i data-plus-post='plus-upvote' class="fas fa-plus fs-5"></i>`);
+    let counter = event.target.previousElementSibling;
+    let originalValue = parseInt(counter.innerText);
+    if($('#plus-post').hasClass('central-blue-text')){
         counter.innerText = parseInt(counter.innerText) - 1;
     }
-    if (resp.data.category === 'danger'){
-        $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
-                                        <div class='text-center'>
-                                            ${resp.data.message}
-                                        </div>
-                                        </div>`);
+    if($('#minus-post').hasClass('red-text')){
+        counter.innerText = parseInt(counter.innerText) + 1;
+        $('#minus-post').removeClass('red-text');
+        $('#plus-post').removeClass('central-blue-text');
+        resp = await axios.get(`https://${window.location.host}/forum/post/${id}/dislike/remove`);
+        $('#flashed_message').remove();
+        if (resp.data.category === 'danger'){
+            $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
+                                            <div class='text-center'>
+                                                ${resp.data.message}
+                                            </div>
+                                            </div>`);
+        counter.innerText = parseInt(counter.innerText) - 1;
+        $('#minus-post').addClass('red-text');
+        };
+    } else {
+        let counter = event.target.previousElementSibling;
+        counter.innerText = parseInt(counter.innerText) - 1;
+        $('#minus-post').addClass('red-text');
+        $('#plus-post').removeClass('central-blue-text');
+        resp = await axios.get(`https://${window.location.host}/forum/post/${id}/dislike/add`);
+        $('#flashed_message').remove();
+        if (resp.data.category === 'danger'){
+            $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
+                                            <div class='text-center'>
+                                                ${resp.data.message}
+                                            </div>
+                                            </div>`);
+        counter.innerText = originalValue;
+        $('#minus-post').removeClass('red-text');
+        };
     };
 };
+
+
 
 let commentBox = document.getElementById('comment-box');
 let rmvCmntBtn = document.getElementById('remove-comment-btn');
@@ -116,19 +245,15 @@ commentBox.addEventListener('click', e => {
     e.preventDefault();
     if(e.target.dataset['removeBtn']){
         removeComment(e);
-    }
+    };
 });
 
-
 function removeComment(event){
-    if(event.target.type !== undefined){
-        let commentId = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+        let commentId = event.target.dataset['commentId']
         rmvCmntBtn.href = `/forum/post/${event.target.dataset['removeBtn']}/comment/remove/${commentId}`;
-    } else {
-        let commentId = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
-        rmvCmntBtn.href = `/forum/post/${event.target.dataset['removeBtn']}/comment/remove/${commentId}`;
-    };
 };
+
+
 
 function editComment(event, id){
     let commentText;
@@ -142,6 +267,8 @@ function editComment(event, id){
     }
     editCommentDomChangesPrePost(id, commentText, pTag);
 };
+
+
 
 function editCommentDomChangesPrePost(id, commentText, pTag){
     $(pTag).remove();
@@ -162,6 +289,8 @@ function editCommentDomChangesPrePost(id, commentText, pTag){
     });
 };
 
+
+
 function removeEditCommentForm(id, pTag){
     $(`#${id} #remove-comment-edit`).remove();
     $(`#${id} #comment-button-box`).prepend(`<div id='edit-comment-btn' class='d-inline'>
@@ -169,24 +298,25 @@ function removeEditCommentForm(id, pTag){
     </div>`);
     $(`#${id} #edit-comment-form`).remove();
     $(`#${id} #comment-info`).append(pTag);
-}
+};
+
+
 
 async function postCommentChange(id){
     content = $(`#${id} #comment-input`).val()
-    resp = await axios.post(`http://${window.location.host}/forum/comment/${id}/edit?content=${content}`);
+    resp = await axios.post(`https://${window.location.host}/forum/comment/${id}/edit?content=${content}`);
     let oldText = $(`#${id} #old-comment-text`).val()
     removeEditCommentForm(id);
+    $('#flashed_message').remove();
     if(resp.data.category){
-        $('#flashed_message').remove();
         $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
                                     <div class='text-center'>
                                         ${resp.data.message}
                                     </div>
                                     </div>
                                     `);
-        $(`#${id} #comment-info`).append(`<p class='text-break'>${oldText}<p>`)
+        $(`#${id} #comment-info`).append(`<p class='text-break'>${oldText}<p>`);
     } else {
-        $('#flashed_message').remove();
-        $(`#${id} #comment-info`).append(`<p class='text-break'>${resp.data.content}<p>`)
+        $(`#${id} #comment-info`).append(`<p class='text-break'>${resp.data.content}<p>`);
     };
 };

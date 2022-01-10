@@ -1,5 +1,3 @@
-##########################################################################################################################################
-
 def clean_and_seperate_search_terms(search_terms: str) -> str:
     """Returns a string of the search terms serperated by a '+' character."""
     
@@ -14,6 +12,3 @@ def clean_and_seperate_game_name(game_name: str) -> str:
 
     game_name = game_name.strip().replace(' ', '_')
     return game_name
-    
-    
-##########################################################################################################################################

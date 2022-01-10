@@ -1,5 +1,8 @@
 {% extends 'index/base.html' %}
 {% block title %}Account Settings{% endblock %}
+{% block linktags %}
+    <link rel="stylesheet" href="{{url_for('users_bp.static', filename='edit_profile.css')}}">
+{% endblock %}
 {% block content%}
 <div class='darker-gray'>
     <div class="container py-4">
@@ -7,28 +10,25 @@
             <div class="col-12 col-md-12 col-lg-11 col-xl-10 col-xxl-9 mx-auto">
                 <div class="row" >
 
-                    
                         <div class='col-4 col-lg-3 dark-gray p-0 d-none' id='side-nav'>
                             <div class='d-flex flex-column justify-content-evenly align-items-center no-highlight'>
                                 <div class='my-2 fw-bolder text-decoration-underline link-light' data-as='edit-account-settings'>
-                                    <span class=' fs-5' href="#">Account Settings</span>
+                                    <span class='edit-profile-nav fs-5' href="#">Account Settings</span>
                                 </div>
                                 <div class='my-2 text-white-50' data-ep='edit-profile'>
-                                    <span class=' fs-5' href="#">Edit Profile</span>
+                                    <span class='fs-5 edit-profile-nav' href="#">Edit Profile</span>
                                 </div>
                             </div>
                         </div>
                         <div class='col border-start border-dark gray'>
                             <div class="row dark-gray p-0 py-2 mb-2 d-none" id='top-nav'>
                                 <div class='col text-center no-highlight fw-bolder text-decoration-underline link-light' data-as='account-settings'>
-                                    <span class='fs-4' href="#">Account Settings</span>
+                                    <span class='edit-profile-nav fs-4' href="#">Account Settings</span>
                                 </div>
                                 <div class='col text-center no-highlight border-start border-light text-white-50 ' data-ep='edit-profile'>
-                                    <span class='fs-4' href="#">Edit Profile</span>
+                                    <span class='edit-profile-nav fs-4' href="#">Edit Profile</span>
                                 </div>
                             </div>
-
-
 
 
                             <div id='profile-settings' class='pb-3 d-none'>
@@ -47,7 +47,7 @@
                                                 <div class='row mb-3'>
                                                     <div class='row mb-2 d-flex align-items-center'>
                                                         <div class="col-auto p-0 m-0 ms-2">
-                                                            <img class='' src="/static/icons/tooltip.png" alt="Tooltip image" title='Image not showing up? Try clearing the cache on your browser! Only .jpeg and .png files are accepted.' width=20 height=20>
+                                                            <img id='photo-tooltip' src="/static/icons/tooltip.png" alt="Tooltip image" title='Image not showing up? Try clearing the cache on your browser! Only .jpeg and .png files are accepted.' width=20 height=20>
                                                         </div>
                                                         <div class="col">
                                                             {% if g.user.profile_image and g.user.profile_image_uploaded %}
@@ -70,14 +70,14 @@
                                                             <div class='col-auto m-auto'>
                                                                 <div class="form-check  px-3 form-switch light-round-all border border-dark darker-gray">
                                                                     {% if g.user.profile_image and g.user.profile_image_uploaded %}
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="border border-dark form-check-input shadow-sm" name='check' type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                                                                            <label class="text-light form-check-label" for="flexSwitchCheckChecked">Enable Profile Image</label>
+                                                                        <div class="form-check form-switch no-highlight">
+                                                                            <input class="border border-dark form-check-input shadow-sm image-toggle" name='check' type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                                                            <label class="text-light form-check-label image-toggle" for="flexSwitchCheckChecked">Enable Profile Image</label>
                                                                         </div>
                                                                     {% else%}
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="border border-dark form-check-input shadow-sm" name='check' type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                                                                            <label class="text-light form-check-label" for="flexSwitchCheckChecked">Enable Profile Image</label>
+                                                                        <div class="form-check form-switch no-highlight">
+                                                                            <input  class="border border-dark form-check-input shadow-sm image-toggle" name='check' type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                                                                            <label class="text-light form-check-label image-toggle" for="flexSwitchCheckChecked">Enable Profile Image</label>
                                                                         </div>
                                                                     {% endif %}
                                                                 </div>
@@ -105,10 +105,6 @@
                             </div>
 
 
-
-
-
-
                             <div id='account-settings' class=''>
                                 <div class="row">
                                     <div class='col-11 col-md-10 m-auto'>
@@ -124,27 +120,8 @@
                                         <a class='btn btn-sm nav-user-btn' href="/users/account/delete">Delete Account</a>
                                     </div>
                                 </div>
-
-
                             </div>
-
-
-
-
-
-
-
-
                         </div>
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>

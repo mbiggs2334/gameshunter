@@ -5,4 +5,23 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-} 
+}
+
+.profile-tab:hover{
+    background-color: rgb(177, 177, 177);
+    transition: all .3s ease;
+}
+
+.profile-tab:not(:hover){
+    transition: .3s ease;
+}
+
+#post-div a:hover {
+    color: rgb(0, 0, 0) !important;
+    transition: .3s ease !important;
+}
+
+#post-div a:not(:hover) {
+    color: white !important;
+    transition: .3s ease !important;
+}

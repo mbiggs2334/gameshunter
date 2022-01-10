@@ -42,11 +42,12 @@
 <div class='gray py-4'>
     <div class="container">
         <div class="row">
-            <div class="col-xxl-7 col-xl-8 col-lg-9 col-md-11 col-sm-12 col-12 mx-auto ">
+            <div class="col-xxl-7 col-xl-8 col-lg-9 col-md-11 col-sm-12 col-12 mx-auto">
                 <div class="row">
-                    <div class="col dark-gray shadow border border-dark rounded-3 position-relative">
+                    <div class="col dark-gray shadow border border-dark rounded-3 position-relative overflow-hidden">
                         {% if post.user.id == g.user.id %}
-                            <div style='border-bottom-left-radius: 5px;' class='position-absolute shadow-sm d-flex flex-row justify-content-evenly align-items-center darker-gray top-0 end-0 px-2 py-1'>
+                            <div id='user-post-controls' style='border-bottom-left-radius: 5px;' class='position-absolute shadow d-flex flex-row justify-content-evenly align-items-center darker-gray top-0 end-0 pe-2 py-1'>
+                                <i id='user-post-controls-arrow' class="fas fa-chevron-left text-light mx-1"></i>
                                 <div class='me-2'>
                                     <a href="/forum/post/{{post.id}}/edit" class='btn btn-sm btn-primary border border-dark' title='Edit post'><i class="far fa-edit"></i></a>
                                 </div>
@@ -55,122 +56,177 @@
                                 </div>
                             </div>
                         {% endif %}
-                            <div class="row mb-3">
-                                <div class="col-auto pe-0 border-end border-bottom border-dark dark-gray d-flex flex-column justify-content-between align-items-center p-3 pe-3 shadow-sm">
-                                    <div id='post-counter' data-post='{{post.id}}' class="mb-2">
-                                        <span class='fs-4'>{{post.upvotes|count}}</span>
-                                        {% set y = namespace(total=0) %}
-                                        {% for up_post in g.user.upvoted_posts %}
-                                            {% if post.id == up_post.post_id %}
-                                            {% set y.total = y.total + 1 %}
-                                            <i data-minus-post='minus-upvote' class="fas fa-minus fs-5"></i>
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% if y.total == 0 %}
-                                            <i data-plus-post='plus-upvote' class="fas fa-plus fs-5"></i>
+                        <div class="row">
+                            <div style='min-width: 70px; max-width: 70px' class="col-auto border-end border-dark dark-gray shadow-sm">
+                                <div id='post-counter' data-post='{{post.id}}' class="d-flex flex-column justify-content-between align-items-center px-1 ps-2 pt-3">
+                                    {% set y = namespace(total=0) %}
+                                    {% for up_post in g.user.upvoted_posts %}
+                                        {% if post.id == up_post.post_id %}
+                                        {% set y.total = y.total + 1 %}
+                                            <i id='plus-post' data-plus-post='plus-upvote' class="fas fa-arrow-up fs-4 central-blue-text"></i>
+                                            <span class='fs-4'>{{post.likes}}</span>
+                                            <i id='minus-post' data-minus-post='minus-upvote' class="fas fa-arrow-down fs-4"></i>
                                         {% endif %}
-                                    </div>
-                                </div>
-                                <div class="col p-2 px-3 ms-2">
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <div>
-                                                <a class='link-light fs-5' href="/users/{{post.user.id}}/profile">@{{post.user.username}}</a>
-                                                <span class='fs-6'>posted {{moment(post.datetime_added).fromNow()}}</span>
-                                                <span>about <a class='link-light' href='/games/{{post.game.rawg_id}}'>{{post.game.title}}</a></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                        <span class='d-inline display-4 text-break'>{{post.title}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mx-2 mb-3 border-top border-bottom border-dark text-break">
-                                <div class='col my-3 text-break'>
-                                    <span style='white-space: pre-wrap;' class='text-break'>{{post.content}}</span>
-                                </div>
-                            </div>
-                            <div class="row p-2">
-                                <div class="col">
-                                    <div>
-                                        <form method='POST' enctype='multipart/form-data'>
-                                            {{form.hidden_tag()}}
-                                            {% for field in form if field.widget.input_type != 'hidden' %}
-                                                <div class='input-group shadow-sm mb-1'>
-                                                    {{field(class_='form-control border border-dark', placeholder_='Add a comment...')}}
-                                                    <button class=' border border-dark btn btn-sm btn-primary'>+Comment</button>
-                                                </div>
-                                            {% endfor %}
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div id='comment-box' class="col">
-                                    {% if post.comments %}
-                                    {% for comment in post.comments|sort(attribute='datetime_added') %}
-                                        <div id='{{comment.id}}' data-comment='#' class='row border border-dark mb-2 shadow-sm mx-2 rounded-3'>
-                                            <div class='col-auto p-2 border-end border-dark'>
-                                                    {% if comment.user.profile_image and comment.user.profile_image_uploaded %}
-                                                    <div style='min-width: 75px; max-width: 75px;
-                                                    background-image: url("https://gamehunter.s3.us-east-2.amazonaws.com/users/{{comment.user.id}}/profile.png");
-                                                    background-position: center; background-size: cover; background-repeat: no-repeat;' class='h-100'>
-                                                    
-                                                    </div>
-                                                    {% else %}
-                                                    <div style='min-width: 75px; max-width: 75px;'>
-                                                        <img style='min-height: 65px; max-height: 65px; height: 100%;' class='bg-dark img-fluid border border-dark d-block mx-auto' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
-                                                        alt="Profile image for {{comment.user.username}}">
-                                                    </div>
-                                                    {% endif %}
-                                            </div>
-                                            <div class="col w-100 h-100">
-                                                <div id='comment-info' class="row">
-                                                    <h6 class='mb-1 pt-1'><a class='link-dark' href='/users/{{comment.user.id}}/profile' >@{{comment.user.username}}</a> <small><small><span>{{moment(comment.datetime_added).fromNow()}}</span></small></small>
-                                                    {% if comment.user.id == g.user.id %}
-                                                        <div id='comment-button-box' class='shadow-sm float-end'>
-                                                            <div id='edit-comment-btn' class='d-inline'>
-                                                                <a href="#" data-edit-comment='#' class='d-inline btn btn-sm btn-primary border border-dark' title='Edit comment'><i data-edit-comment='#' class="far fa-edit"></i></a>
-                                                            </div>
-                                                            <div class='d-inline'>
-                                                                <a data-bs-toggle="modal" data-bs-target="#removeCommentModal" data-remove-btn='{{post.id}}' title='Remove comment' href="#" class='d-inline btn btn-sm nav-user-btn border-1 border-dark'><i data-remove-btn='{{post.id}}' class="fas fa-trash-alt"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    {% endif %}
-                                                    </h6>
-                                                    <hr class='mb-1 mt-0'>
-                                                    <p class='text-break'>{{comment.content}}</p>
-                                                </div>
-                                            </div>
-                                            <div style='min-width: 55px; max-width: 55px;' id='{{comment.id}}-counter-box' class="col-auto d-flex px-3 flex-column justify-content-center align-items-center border-start border-dark">
-                                                    {% set x = namespace(total=0) %}
-                                                    {% for up_comment in g.user.upvoted_comments %}
-                                                        {% if comment.id == up_comment.comment_id %}
-                                                        {% set x.total = x.total + 1 %}
-                                                        <i data-minus-comment='minus-upvote' class="fas fa-minus fs-5"></i>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    {% if x.total == 0 %}
-                                                        <i data-plus-comment='plus-upvote' class="fas fa-plus fs-5"></i>
-                                                    {% endif %}
-                                                <span data-upvote-count='comment-votes' class='fs-4'>{{comment.upvotes|count}}</span>
-                                            </div>
-                                        </div>
                                     {% endfor %}
-                                    {% else %}
-                                        <div class='mt-2'>
-                                            <p class='text-break text-center fs-4'>There are no comments on this post.</p>
-                                        </div>
+                                    {% for down_post in g.user.downvoted_posts %}
+                                        {% if post.id == down_post.post_id %}
+                                        {% set y.total = y.total + 1 %}
+                                            <i id='plus-post' data-plus-post='plus-upvote' class="fas fa-arrow-up fs-4"></i>
+                                            <span class='fs-4'>{{post.likes}}</span>
+                                            <i id='minus-post' data-minus-post='minus-upvote' class="fas fa-arrow-down fs-4 red-text"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if y.total == 0 %}
+                                        <i id='plus-post' data-plus-post='plus-upvote' class="fas fa-arrow-up fs-4"></i>
+                                        <span class='fs-4'>{{post.likes}}</span>
+                                        <i id='minus-post' data-minus-post='minus-upvote' class="fas fa-arrow-down fs-4"></i>
                                     {% endif %}
                                 </div>
                             </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row mb-2">
+                                            <div class="col ps-3 pe-4">
+                                                <span class='d-inline display-4 text-break'>{{post.title}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <div>
+                                                    <a class='link-light fs-6' href="/users/{{post.user.id}}/profile">@{{post.user.username}}</a>
+                                                    <span class='fs-6'>posted {{moment(post.datetime_added).fromNow()}}</span>
+                                                    <span>about <a class='link-light' href='/games/{{post.game.rawg_id}}'>{{post.game.title}}</a></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mx-2 mb-3 border-top border-bottom border-dark text-break">
+                                    <div class='col my-3 text-break'>
+                                        <span style='white-space: pre-wrap;' class='text-break'>{{post.content}}</span>
+                                    </div>
+                                </div>
+
+
+                                
+                            </div>
+
+                        </div>
+                        
+                            
                     </div>
                 </div>
             </div>
+
         </div>    
+
+        <div class="row">
+            <div class="col-xxl-7 col-xl-8 col-lg-9 col-md-11 col-sm-12 col-12 mx-auto dark-gray mt-2 border border-dark rounded shadow">
+                <div class="row p-2">
+                    <div class="col">
+                        <div>
+                            <form method='POST' enctype='multipart/form-data'>
+                                {{form.hidden_tag()}}
+                                {% for field in form if field.widget.input_type != 'hidden' %}
+                                    <div class='input-group shadow-sm mb-1'>
+                                        {{field(class_='form-control border border-dark', placeholder_='Add a comment...')}}
+                                        <button class=' border border-dark btn btn-sm btn-primary'>+Comment</button>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id='comment-box' class="col">
+                        {% if post.comments %}
+                        {% for comment in post.comments|sort(attribute='datetime_added') %}
+                            <div id='{{comment.id}}' data-comment='#' class='row border border-dark mb-2 shadow-sm mx-2 rounded-3'>
+                                <div class='col-auto p-2 border-end border-dark'>
+                                        {% if comment.user.profile_image and comment.user.profile_image_uploaded %}
+                                        <div style='min-width: 75px; max-width: 75px;
+                                        background-image: url("https://gamehunter.s3.us-east-2.amazonaws.com/users/{{comment.user.id}}/profile.png");
+                                        background-position: center; background-size: cover; background-repeat: no-repeat;' class='h-100'>
+                                        
+                                        </div>
+                                        {% else %}
+                                        <div style='min-width: 75px; max-width: 75px;'>
+                                            <img style='min-height: 65px; max-height: 65px; height: 100%;' class='bg-dark img-fluid border border-dark d-block mx-auto' src="https://gamehunter.s3.us-east-2.amazonaws.com/static/images/profile.png"
+                                            alt="Profile image for {{comment.user.username}}">
+                                        </div>
+                                        {% endif %}
+                                </div>
+                                <div class="col w-100 h-100">
+                                    <div id='comment-info' class="row">
+                                        <h6 class='mb-1 pt-1'><a class='link-dark' href='/users/{{comment.user.id}}/profile' >@{{comment.user.username}}</a> <small><small><span>{{moment(comment.datetime_added).fromNow()}}</span></small></small>
+                                        {% if comment.user.id == g.user.id %}
+                                            <div id='comment-button-box' class='shadow-sm float-end'>
+                                                <div id='edit-comment-btn' class='d-inline'>
+                                                    <a href="#" data-edit-comment='#' class='d-inline btn btn-sm btn-primary border border-dark' title='Edit comment'><i data-edit-comment='#' class="far fa-edit"></i></a>
+                                                </div>
+                                                <div class='d-inline'>
+                                                    <a data-bs-toggle="modal" data-bs-target="#removeCommentModal" data-remove-btn='{{post.id}}' data-comment-id='{{comment.id}}' title='Remove comment' href="#" class='d-inline btn btn-sm nav-user-btn border-1 border-dark'><i data-remove-btn='{{post.id}}' data-comment-id='{{comment.id}}' class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        </h6>
+                                        <hr class='mb-1 mt-0'>
+                                        <p class='text-break'>{{comment.content}}</p>
+                                    </div>
+                                </div>
+                                <div style='min-width: 55px; max-width: 55px;' id='{{comment.id}}-counter-box' class="col-auto d-flex px-3 flex-column justify-content-center align-items-center border-start border-dark">
+                                    {% set x = namespace(total=0) %}
+                                    {% for up_comment in g.user.upvoted_comments %}
+                                        {% if comment.id == up_comment.comment_id %}
+                                        {% set x.total = x.total + 1 %}
+                                            <i id='plus-comment' data-plus-comment='plus-upvote' class="fas fa-arrow-up fs-5 central-blue-text"></i>
+                                            <span class='fs-5'>{{comment.likes}}</span>
+                                            <i id='minus-comment' data-minus-comment='minus-upvote' class="fas fa-arrow-down fs-5"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for down_comment in g.user.downvoted_comments %}
+                                        {% if comment.id == down_comment.comment_id %}
+                                        {% set x.total = x.total + 1 %}
+                                            <i id='plus-comment' data-plus-comment='plus-upvote' class="fas fa-arrow-up fs-5"></i>
+                                            <span class='fs-5'>{{comment.likes}}</span>
+                                            <i id='minus-comment' data-minus-comment='minus-upvote' class="fas fa-arrow-down fs-5 red-text"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if x.total == 0 %}
+                                        <i id='plus-comment' data-plus-comment='plus-upvote' class="fas fa-arrow-up fs-5"></i>
+                                        <span class='fs-5'>{{comment.likes}}</span>
+                                        <i id='minus-comment' data-minus-comment='minus-upvote' class="fas fa-arrow-down fs-5"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                            <div class='mt-2'>
+                                <p class='text-break text-center fs-4'>There are no comments on this post.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 </div>
 {% endblock %}

@@ -96,6 +96,3 @@ def send_feedback_report_email():
     else:
         flash('Something went wrong. Please try again later.', 'danger')
         return redirect('/support')
-    
-
-##########################################################################################################################################

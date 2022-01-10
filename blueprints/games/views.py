@@ -124,6 +124,3 @@ def remove_game_from_favorites():
         return jsonify(dict(message='Something went wrong. Please try again later.', category='danger'))
     
     return jsonify(dict(message='Game successfully removed from your favorites.', category='success'))
-
-
-##########################################################################################################################################

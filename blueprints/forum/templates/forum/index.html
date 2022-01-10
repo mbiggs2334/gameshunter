@@ -30,7 +30,7 @@
 
                         <div class='col overflow-hidden text-truncate text-light ms-2'>
                             <a class='fs-3 link-light text-light' href="/forum/post/{{post.id}}">{{post.title}}</a>
-                            <span class='d-block text-dark'><a class='link-light' href="/users/profile/{{post.user.id}}">@{{post.user.username}}</a> posted {{moment(post.datetime_added).fromNow()}}</span>
+                            <span class='d-block text-dark'><a class='link-light' href="/users/{{post.user.id}}/profile">@{{post.user.username}}</a> posted {{moment(post.datetime_added).fromNow()}}</span>
                         </div>
                         
                     </div>

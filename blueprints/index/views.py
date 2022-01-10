@@ -44,7 +44,7 @@ def support_page():
 
 ##########################################################################################################################################
 
-@index_bp.route('/faq')
+@index_bp.route('/support/faq')
 def faq_page():
     """Endpoint for the FAQ."""
 
@@ -53,7 +53,7 @@ def faq_page():
 
 ##########################################################################################################################################
 
-@index_bp.route('/feedback', methods=['GET', 'POST'])
+@index_bp.route('/support/feedback', methods=['GET', 'POST'])
 def feedback_page():
     """Endpoint for the Feedback form in the Suppot section of the web app.
     
@@ -78,7 +78,7 @@ def feedback_page():
 
 ##########################################################################################################################################
 
-@index_bp.route('/report', methods=['GET', 'POST'])
+@index_bp.route('/support/report', methods=['GET', 'POST'])
 def report_page():
     """Endpoint for the Report form in the Suppot section of the web app.
     
@@ -98,7 +98,4 @@ def report_page():
         session['channel'] = 'Report'
         return redirect('/emails/feedbackreport')
     
-    return render_template('index/report.html', form=form)
-    
-   
-########################################################################################################################################## 
+    return render_template('index/report.html', form=form) 

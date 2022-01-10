@@ -95,3 +95,9 @@ window.addEventListener('mousemove', () => {
         activePing = 'active';
     };
 });
+
+window.addEventListener('touchmove', () => {
+    if(activePing !== 'active'){
+        activePing = 'active';
+    };
+});

@@ -1,0 +1,7 @@
+.edit-profile-nav:hover, .image-toggle:hover {
+    cursor: pointer;
+}
+
+#photo-tooltip {
+    cursor: help;
+}

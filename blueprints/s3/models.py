@@ -22,7 +22,7 @@ class S3Handler():
 
     @classmethod
     def upload_user_image(self, user_id):
-        """Uploads the User submitted image to AWS' S3 storage."""
+        """Uploads the User submitted image to AWS S3 storage."""
         
         file = f'blueprints/users/tempFolder/{g.user.id}profile.png'
         bucket = 'gamehunter'
@@ -31,6 +31,3 @@ class S3Handler():
         s3_resource.meta.client.upload_file(file, bucket, key)
     
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], f'{user_id}profile.png'))
-        
-
-##########################################################################################################################################

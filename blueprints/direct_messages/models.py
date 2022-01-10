@@ -1,7 +1,7 @@
 from flask import redirect, flash
 from gamehunter.db import db
 from app import socketio
-from flask_socketio import join_room, leave_room
+from flask_socketio import join_room
 from blueprints.users.models import Message
 
 ##########################################################################################################################################
@@ -45,6 +45,8 @@ def user_join_room(data):
 
 @socketio.on('user_active')
 def user_is_active(data):
+    """Listens for the the 'User Active' Ping and marks all messages sent to g.User as seen."""
+    
     messages = Message.query.filter(Message.sent_by_id==data['otherUser'],
                                     Message.sent_to_id==data['user'],
                                     Message.seen_by_user==False).all()

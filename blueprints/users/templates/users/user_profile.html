@@ -109,13 +109,13 @@
                     </div>
                 </div>
                 <div class="row border-top border-bottom border-dark">
-                    <div  style='cursor: pointer' id='post-nav' class="col text-center pt-1">
+                    <div  style='cursor: pointer' id='post-nav' class="col text-center pt-1 profile-tab">
                             <h4>Posts ({{user.posts|count}})</h4>
                     </div>
-                    <div  style='cursor: pointer' id='following-nav' class="col text-center border-start border-end border-dark pt-1">
+                    <div  style='cursor: pointer' id='following-nav' class="col text-center border-start border-end border-dark pt-1 profile-tab">
                             <h4>Following ({{user.following|count}})</h4>
                     </div>
-                    <div  style='cursor: pointer' id='follower-nav' class="col text-center pt-1">
+                    <div  style='cursor: pointer' id='follower-nav' class="col text-center pt-1 profile-tab">
                         <h4>Followers ({{user.followers|count}})</h4>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                                 {% if (user.posts|count) > 0 %}
                                     {% for post in user.posts|sort(attribute='last_active') %}
                                         <div class='row p-2 px-4'>
-                                            <a class='link-light d-inline fs-3 text-truncate' href="/forum/post/{{post.id}}">{{post.title}}</a>
+                                            <a class='link-light fs-3 text-truncate' href="/forum/post/{{post.id}}">{{post.title}}</a>
                                             <span class='d-inline'>about <a class='link-light' href="/games/{{post.game.rawg_id}}">{{post.game.title}}</a></span>
                                             <p class='text-truncate'>{{post.content}}</p>
                                         </div>

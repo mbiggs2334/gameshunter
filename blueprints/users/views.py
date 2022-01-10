@@ -461,6 +461,3 @@ def report_user(user_id):
         return redirect(f'/emails/report/{user_id}')
     
     return render_template('users/report.html', form=form)
-
-
-##########################################################################################################################################

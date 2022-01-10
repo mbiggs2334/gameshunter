@@ -275,6 +275,10 @@ class User(db.Model):
 
     upvoted_posts = db.relationship('UpvotePost', cascade='all,delete', backref='user')
     
+    downvoted_comments = db.relationship('DownvoteComment', cascade='all, delete', backref='user')
+    
+    downvoted_posts = db.relationship('DownvotePost', cascade='all, delete', backref='user')
+    
     messages_sent = db.relationship('Message', cascade='all,delete', primaryjoin=(Message.sent_by_id == id), overlaps="sent_by")
 
     messages_received = db.relationship('Message', cascade='all,delete', primaryjoin=(Message.sent_to_id == id), overlaps="sent_to")
@@ -656,6 +660,3 @@ class PastUsernames(db.Model):
             return False
         
         return True
-    
-    
-##########################################################################################################################################

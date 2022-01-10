@@ -1,0 +1,9 @@
+#support-container a:hover {
+ color: white !important;
+ transition: all .2s ease;
+}
+
+#support-container a:not(:hover) {
+ color: black !important;
+ transition: all .4s ease;
+}

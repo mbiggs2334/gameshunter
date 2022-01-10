@@ -10,8 +10,10 @@ let followerDiv = document.querySelector('#follower-div');
 
 postNav.addEventListener('click', () => {
     followerNav.classList.remove('gray');
+    followerNav.classList.add('profile-tab');
     followerDiv.classList.add('d-none');
     followingNav.classList.remove('gray');
+    followingNav.classList.add('profile-tab');
     followingDiv.classList.add('d-none');
 
     postNav.classList.add('gray');
@@ -20,6 +22,7 @@ postNav.addEventListener('click', () => {
     } else {
         postDiv.classList.add('d-none');
         postNav.classList.remove('gray');
+        
     };
 });
 

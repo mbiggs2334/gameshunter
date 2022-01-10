@@ -19,10 +19,9 @@ moment = Moment(app)
 mail = Mail(app)
 socketio = SocketIO(app=app, async_mode='gevent')
 
-### imports blueprints
+### Imports blueprints
 from blueprints.blueprints import authenticate_bp, message_bp, index_bp, email_handler_bp, forum_bp, games_bp, news_bp, users_bp
  
-
 ### Registers blueprints
 app.register_blueprint(authenticate_bp)
 app.register_blueprint(message_bp)
@@ -51,6 +50,9 @@ def add_user_to_global():
     else:
         g.user = None
 
+from blueprints.users.functions import update_user_active_status
+update_user_active_status()
+
+# Starts SocketIO.
 if __name__ == '__main__':
     socketio.run(app)
-

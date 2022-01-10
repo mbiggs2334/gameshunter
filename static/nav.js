@@ -1,3 +1,21 @@
+const navList = ['home', 'games', 'forum', 'support', 'users'];
+for(let item of navList){
+    if(item === 'users'){
+        continue
+    };
+    if(window.location.href.indexOf(`${item}`) !== -1){
+        activeNavFlag(`${item}`);
+    } else if(window.location.href === `http://${window.location.host}/`){
+        activeNavFlag(`home`);
+    };
+};
+
+function activeNavFlag(section){
+    $(`#${section}-nav`).children().children().first().addClass('nav-button-active-flag');
+    $(`#${section}-nav`).children().children().last().removeClass('text-dark');
+    $(`#${section}-nav`).children().children().last().addClass('text-light');
+}
+
 let mobileNavMenu = document.getElementById('navbarToggleExternalContent');
 let mobileNavButton = document.getElementById('mobileNavButton');
 let mainNav = document.querySelector('nav');
@@ -30,3 +48,31 @@ function stickyNav() {
       mobileNavMenu.style.top = 'auto';
     };
   };
+
+
+addEventListenersToNavBar(navList);
+
+function addEventListenersToNavBar(list){
+    for(let item of list){
+        if (!($(`#${item}-nav`).children().children().first().hasClass('nav-button-active-flag'))){
+            $(`#${item}-nav`).mouseenter(() => {
+                navLinkMouseEnter(`${item}`);
+            }).mouseleave(() => {
+                navLinkMouseLeave(`${item}`);
+            });
+        };
+    };
+};
+
+
+function navLinkMouseEnter(section){
+    $(`#${section}-nav`).children().children().last().removeClass('text-dark');
+    $(`#${section}-nav`).children().children().last().addClass('text-light');
+    $(`#${section}-nav`).children().children().first().addClass('nav-button-flag');
+};
+
+function navLinkMouseLeave(section){
+    $(`#${section}-nav`).children().children().first().removeClass('nav-button-flag');
+    $(`#${section}-nav`).children().children().last().removeClass('text-light');
+    $(`#${section}-nav`).children().children().last().addClass('text-dark');
+};

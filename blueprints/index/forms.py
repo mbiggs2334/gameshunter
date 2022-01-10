@@ -11,6 +11,3 @@ class Feedback_Report_Form(FlaskForm):
     email = EmailField('Your Email Address', validators=[InputRequired()])
 
     info = TextAreaField('Details', validators=[InputRequired(), Length(max=500)])
-    
-
-##########################################################################################################################################

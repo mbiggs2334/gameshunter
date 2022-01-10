@@ -30,8 +30,8 @@ def authenticate_email(token):
     flash('Thanks for registering! Your account has been successfully created and confirmed.', 'success')
     return redirect('/')
     
-
 ##########################################################################################################################################
+
 
 @authenticate_bp.route('/password/reset/<string:token>', methods=['GET', 'POST'])
 def authenticate_email_pass(token):
@@ -63,6 +63,3 @@ def authenticate_email_pass(token):
         return redirect('/')
     else:
         return render_template('authenticate_handler/good_confirm_pass.html', form=form)
-    
-
-##########################################################################################################################################

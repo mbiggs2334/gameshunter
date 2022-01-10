@@ -83,8 +83,8 @@ class MailHandler:
 
     @classmethod
     def send_feedback_or_report_email(self, email=None, content=None, channel=None):
-        """Sends an email containing information from User Feedback/Reports via the Support section of the web app.
-        """
+        """Sends an email containing information from User Feedback/Reports via the Support section of the web app."""
+
         msg = Message(f'User {channel}', sender='gameshunter@gmail.com', recipients=['gamehunters2334@gmail.com'])
         
         msg.body = f"""User email: {email}
@@ -98,8 +98,4 @@ class MailHandler:
             mail.send(msg)
         except:
             return False
-        
         return True
-    
-    
-##########################################################################################################################################

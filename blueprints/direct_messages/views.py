@@ -56,6 +56,3 @@ def start_new_conversation(user_id):
         else:
             flash('Something went wrong. Please try again later.', 'danger')
             return redirect(f'/users/{user.id}/profile')
-        
-
-##########################################################################################################################################

@@ -1,3 +1,21 @@
 i:hover {
     cursor: pointer;
 }
+
+#user-post-controls {
+    transform: translateX(80px);
+    transition: all .5s ease;
+}
+
+#user-post-controls:hover {
+    /* transform: translateX(0px); */
+}
+
+/* #user-pot-controls:not(:hover){
+    transform: translateX(80px);
+} */
+
+#plus-post, #minus-post {
+    -webkit-text-stroke-width: .7px;
+    -webkit-text-stroke-color: black;
+}

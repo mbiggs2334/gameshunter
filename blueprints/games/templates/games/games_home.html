@@ -32,20 +32,21 @@
                             <div id='{{game.id}}' data-game-cont='game-container'  class='light-round-all css-transitions-only-after-page-load shadow m-3 px-0 overflow-hidden'>
                                 <div style="background-image: url('{{game.background_image}}');
                                 background-position: center;
-                                background-size: cover;" 
-                                class='h-100 shadow '>
-                                    <div id='hide-' class='css-transitions-only-after-page-load black-half h-100 position-relative p-5' >
-                                        <div class='p-5'>
-                                            <h1 class='w-75 position-absolute top-5 text-center start-50 translate-middle-x text-light'>{{game['name']}}</h1>
-                                        </div>
-                                        <div class='p-5 position-relative'>
-                                            <div class='p-5'>
-                                                <a class='btn-outline-light btn btn-sm m-0 position-absolute bottom-0 start-0' href="/games/{{game.id}}">Game Details</a>
-                                                <form method='POST' action='/forum/post/new/{{game.id}}'>
+                                background-size: cover; min-height: 400px; max-height: 400px;
+                                min-width: 285px; max-width: 285px" 
+                                class='shadow h-100'>
+                                    <div id='hide-' class='css-transitions-only-after-page-load black-half h-100 position-relative px-md-3 px-1' >
+                                        <div class='d-flex justify-content-end flex-column align-items-center h-100'>
+                                            <div class=''>
+                                                <h1 style='font-size: 2rem;' class='w-100 text-center text-light m-0 p-0 mb-2'>{{game['name']}}</h1>
+                                            </div>
+                                            <div class='align-self-center'>
+                                                <a class='btn-outline-light btn btn-sm mb-1' href="/games/{{game.id}}">Game Details</a>
+                                                <form method='POST' action='/forum/post/new/{{game.id}}' class='text-center mb-4'>
                                                     <input type="hidden" name='name' value='{{game.name}}'>
                                                     <input type="hidden" name='background_image' value='{{game.background_image}}'>
                                                     <input type="hidden" name='release_date' value='{{game.released}}'>
-                                                    <button class='btn-outline-light btn btn-sm m-0 position-absolute bottom-0 end-0' href="/games/news/{{game.id}}">Talk about it</button>
+                                                    <button class='btn-outline-light btn btn-sm m-0' href="/games/news/{{game.id}}">Talk about it</button>
                                                 </form>
                                             </div>
                                         </div>
