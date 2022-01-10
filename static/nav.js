@@ -1,4 +1,4 @@
-const navList = ['home', 'games', 'forum', 'support', 'users'];
+const navList = ['home', '/games', 'forum', 'support', 'users'];
 for(let item of navList){
     if(item === 'users'){
         continue
