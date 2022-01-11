@@ -1,7 +1,6 @@
 from flask import render_template, redirect, session, flash, g, request
 from .forms import SignUpForm, LoginForm, ReverifyEmailForm, EditPasswordForm, EditProfileForm, DeleteAccountForm, ReportUserForm
 from .models import FavoriteGames, User, Block, Conversation, Follow, PastUsernames
-from gamehunter.db import db
 from sqlalchemy.exc import IntegrityError
 from .functions import login, logout
 from .functions import verify_password_match

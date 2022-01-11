@@ -275,6 +275,7 @@ async function downvotePost(event, id){
 //Makes the appropriate DOM changes and tells the server that the User has removed their 'dislike' from the post
 //Reverts back to previous standing if receives an error from server and appends a message to the DOM letting the User know
 async function alreadyDownVotedPost(id, originalValue, counter){
+    console.log('orange')
     counter.innerText = parseInt(counter.innerText) + 1;
     $('#minus-post').removeClass('red-text');
     $('#plus-post').removeClass('central-blue-text');

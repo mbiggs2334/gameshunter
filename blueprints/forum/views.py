@@ -118,11 +118,11 @@ def add_comment_like(comment_id):
     
     if new_like:
         response = make_response(jsonify(dict(message='Add Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
 ##########################################################################################################################################
@@ -142,11 +142,11 @@ def remove_comment_like(comment_id):
     
     if like_removed:
         response = make_response(jsonify(dict(message='Remove Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     
 
@@ -169,11 +169,11 @@ def add_comment_dislike(comment_id):
     
     if dislike_added:
         response = make_response(jsonify(dict(message='Add Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     
 
@@ -195,11 +195,11 @@ def remove_comment_dislike(comment_id):
     
     if dislike_removed:
         response = make_response(jsonify(dict(message='Remove Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     
 
@@ -221,11 +221,11 @@ def add_post_like(post_id):
     
     if new_like:
         response = make_response(jsonify(dict(message='Add Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong.', category='danger')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
 
@@ -246,11 +246,11 @@ def remove_post_like(post_id):
     
     if like_removed:
         response = make_response(jsonify(dict(message='Remove Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong2', category='danger')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
 
@@ -272,11 +272,11 @@ def add_post_dislike(post_id):
     
     if new_dislike:
         response = make_response(jsonify(dict(message='Add Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong.', category='danger')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
         
     
@@ -297,11 +297,11 @@ def remove_post_dislike(post_id):
     
     if removed_dislike:
         response = make_response(jsonify(dict(message='Remove Successful.')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='Something went wrong2', category='danger')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
 

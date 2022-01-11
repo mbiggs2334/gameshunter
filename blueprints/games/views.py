@@ -69,7 +69,7 @@ def add_game_to_favorites():
 
     if len(g.user.favorites) >= 10:
         response = make_response(jsonify(dict(message=f"You already have the maxiumum amount of favorites. Please <a class='link-light' href='/users/{g.user.id}/favorites'>remove</a> one to add another.", category='danger')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
     game_id = request.args['game_id']
@@ -82,7 +82,7 @@ def add_game_to_favorites():
             db.session.commit()
         except:
             response = make_response(jsonify(dict(message='Something went wrong. Please try again later.', category='danger')))
-            response.headers['Access-Control-Allow-Credentials'] = True
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
             return response
         pass
     
@@ -95,7 +95,7 @@ def add_game_to_favorites():
     
     if fav_check:
         response = make_response(jsonify(dict(message='You already have this game in your favorites.', category='danger')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         pass
@@ -103,11 +103,11 @@ def add_game_to_favorites():
     new_fav = FavoriteGames.create_new_favorite(game_id=game_id, position=len(g.user.favorites) + 1)
     if not new_fav:
             response = make_response(jsonify(dict(message='Something went wrong. Please try again later.', category='danger')))
-            response.headers['Access-Control-Allow-Credentials'] = True
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
             return response
     
     response = make_response(jsonify(dict(message='Game successfully added to your favorites.', category='success')))
-    response.headers['Access-Control-Allow-Credentials'] = True
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 
 
@@ -133,9 +133,9 @@ def remove_game_from_favorites():
         
     except:
         response = make_response(jsonify(dict(message='Something went wrong. Please try again later.', category='danger')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     
     response = make_response(jsonify(dict(message='Game successfully removed from your favorites.', category='success')))
-    response.headers['Access-Control-Allow-Credentials'] = True
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response

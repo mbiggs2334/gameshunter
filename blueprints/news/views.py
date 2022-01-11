@@ -17,9 +17,9 @@ def home_page(name):
     if scrape_resp:
         news = GetSteamNews.get_steam_news(scrape_resp[0])
         response = make_response(news.json())
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     else:
         response = make_response(jsonify(dict(message='None')))
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
