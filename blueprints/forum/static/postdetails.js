@@ -264,9 +264,9 @@ async function downvotePost(event, id){
         counter.innerText = parseInt(counter.innerText) - 1;
     }
     if($('#minus-post').hasClass('red-text')){
-       
+       alreadyDownVotedPost(id, originalValue, counter);
     } else {
-       
+       freshDownVotedPost(id, originalValue, counter);
     };
 };
 
@@ -286,7 +286,7 @@ async function alreadyDownVotedPost(id, originalValue, counter){
                                             ${resp.data.message}
                                         </div>
                                         </div>`);
-        counter.innerText = parseInt(counter.innerText) - 1;
+        counter.innerText = originalValue
         $('#minus-post').addClass('red-text');
     };
 };

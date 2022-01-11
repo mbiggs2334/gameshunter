@@ -1,3 +1,4 @@
+from flask.helpers import make_response
 from flask.json import jsonify
 from blueprints.api.models import GetSteamNews
 from blueprints.web_scraper.models import WebScraper
@@ -15,6 +16,10 @@ def home_page(name):
     
     if scrape_resp:
         news = GetSteamNews.get_steam_news(scrape_resp[0])
-        return news.json()
+        response = make_response(news.json())
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='None'))
+        response = make_response(jsonify(dict(message='None')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
