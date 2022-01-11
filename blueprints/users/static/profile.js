@@ -6,55 +6,46 @@ let postDiv = document.querySelector('#post-div');
 let followingDiv = document.querySelector('#following-div');
 let followerDiv = document.querySelector('#follower-div');
 
-
-
+//adds event listeners to the profile nav buttons
 postNav.addEventListener('click', () => {
-    followerNav.classList.remove('gray');
-    followerNav.classList.add('profile-tab');
-    followerDiv.classList.add('d-none');
-    followingNav.classList.remove('gray');
-    followingNav.classList.add('profile-tab');
-    followingDiv.classList.add('d-none');
-
-    postNav.classList.add('gray');
-    if(postDiv.className.indexOf('d-none') !== -1){
-        postDiv.classList.remove('d-none');
-    } else {
-        postDiv.classList.add('d-none');
-        postNav.classList.remove('gray');
-        
-    };
+    changeProfileDom(postNav);
+    
 });
 
 
 followingNav.addEventListener('click', () => {
-    followerNav.classList.remove('gray');
-    followerDiv.classList.add('d-none');
-    postNav.classList.remove('gray');
-    postDiv.classList.add('d-none');
-
-    followingNav.classList.add('gray');
-    if(followingDiv.className.indexOf('d-none') !== -1){
-        followingDiv.classList.remove('d-none');
-    } else {
-        followingDiv.classList.add('d-none');
-        followingNav.classList.remove('gray');
-    };
+    changeProfileDom(followingNav);
 });
 
 
 followerNav.addEventListener('click', () => {
-    postNav.classList.remove('gray');
-    postDiv.classList.add('d-none');
-    followingNav.classList.remove('gray');
-    followingDiv.classList.add('d-none');
-
-    followerNav.classList.add('gray');
-    if(followerDiv.className.indexOf('d-none') !== -1){
-        followerDiv.classList.remove('d-none');
-    } else {
-        followerDiv.classList.add('d-none');
-        followerNav.classList.remove('gray')
-    };
+    changeProfileDom(followerNav);
 });
+
+//changes the DOM to show the selected info and hide the unselected
+function changeProfileDom(profileNav){
+    let navs = [postNav, followingNav, followerNav];
+    let divs = [postDiv, followingDiv, followerDiv];
+    let index = navs.indexOf(profileNav);
+
+    navs.splice(index, 1);
+    let removedDiv = divs.splice(index, 1);
+
+    for(let nav of navs){
+        nav.classList.remove('gray');
+    };
+
+    for(let div of divs){
+        div.classList.add('d-none');
+    };
+    
+    profileNav.classList.add('gray');
+    if(removedDiv[0].className.indexOf('d-none') !== -1){
+        removedDiv[0].classList.remove('d-none');
+    } else {
+        removedDiv[0].classList.add('d-none');
+        profileNav.classList.remove('gray');
+    };
+};
+
 

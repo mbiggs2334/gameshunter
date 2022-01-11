@@ -4,7 +4,6 @@
 
 from gamehunter import create_app, db
 app = create_app()
-app.config['DEBUG'] = True
 
 from flask_socketio import SocketIO
 from flask_mail import Mail

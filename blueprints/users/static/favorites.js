@@ -16,6 +16,7 @@ if(favForm){
     });
 };
 
+//changes the DOM to move the selected Favorite 'Up' in the order
 function moveUp(event){
     let target = event.target.parentElement.parentElement;
     let targetNewPos = parseInt(target.getAttribute('data-pos')) - 1;
@@ -31,6 +32,7 @@ function moveUp(event){
     changeDomDivs(sortedDivs);
 };
 
+//changes the DOM to move the selected Favorite 'Down' in the order
 function moveDown(event){
     let target = event.target.parentElement.parentElement;
     let targetNewPos = parseInt(target.getAttribute('data-pos')) + 1;
@@ -45,15 +47,17 @@ function moveDown(event){
     changeDomDivs(sortedDivs);
 };
 
-
+//sorts the selected inputs based on the given data position
 function sortDivs(a, b){
     return ($(b).data('pos')) < ($(a).data('pos')) ? 1 : -1;    
 };
 
+//alters the DOM to refelect the changes to the order of the favorites
 function changeDomDivs(sortedArray){
     if(sortedArray.length === 1){
         sortedArray.children('#arrow-box').empty();
     } else {
+        //adds the 'move-up' or 'move-down' arrows depending on div position in the order
         sortedArray.children('#arrow-box').empty();
         sortedArray.children('#arrow-box').first().append(`<i id='move-down' class="fs-2 remove fas fa-arrow-down"></i>`);
         sortedArray.children('#arrow-box').last().append(`<i id='move-up' class="text-info fs-2 fas fa-arrow-up"></i>`);
@@ -69,6 +73,8 @@ function changeDomDivs(sortedArray){
     $('#fav-form').append(sortedArray);
 };
 
+//function to remove the selected game from favorites
+//adds a hidden input with game information that will be pushed along with form submission
 function removeElement(event){
     let target = event.target.parentElement.parentElement.parentElement.parentElement;
     $('#form-row').append(`<input type='hidden' form='fav-form' value='removed' name='${target.children[0].name}'/>`)
@@ -78,6 +84,7 @@ function removeElement(event){
     changeDataAfterRemoval($currDivs);
 };
 
+//changes the 'position' number when a game has been removed from favorites
 function changeDataAfterRemoval(Array){
     for (let i = 0; i < Array.length; i++){
         Array[i].dataset['pos'] = i + 1;

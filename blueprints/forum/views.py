@@ -291,7 +291,7 @@ def remove_post(post_id):
     
     if was_deleted:
         flash('Post successfully removed', 'success')
-        return redirect('/forum')
+        return redirect('/forum/1')
     
     flash('Something went wrong. Please try again later.', 'danger')
     return redirect(f'/forum/post/{post_id}')

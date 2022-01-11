@@ -1,3 +1,4 @@
+//sets the TextArea height to auto adjust on input
 document.getElementById('report_message').addEventListener('input', () => {
     $("textarea").each(function () {
         this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");

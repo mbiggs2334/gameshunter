@@ -2,18 +2,25 @@
 let origHeight = 330;
 let origWidth = 526;
 let images = document.querySelectorAll('[data-img]');
+let imgDivs = document.querySelectorAll('.carousel-item')
+
+//appends carousel indicator buttons
 for(let i = 1; i < images.length; i++ ){
     $('#carouselIndicatorButtons').append(`<button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="${i}" aria-label="Slide ${i+1}"></button>
     `)
 }
-// let currImage = document.getElementsByClassName('carousel-item active')[0].children[0];
-// let newWidth = currImage.width;
+
 for (let image of images) {
     image.style.objectFit = 'cover';
     image.style.minHeight = origHeight + 'px';
     image.style.maxHeight = origHeight + 'px';
     image.style.width = origWidth + 'px';
 };
+
+for(let div of imgDivs){
+    div.style.minHeight = origHeight + 'px';
+    div.style.maxHeight = origHeight + 'px';
+}
 
 let bigGameDeats = document.getElementById('big-game-details');
 let smallGameDeats = document.getElementById('small-game-details');
@@ -43,6 +50,11 @@ function ImageResize(){
         image.style.minHeight = (origHeight / origWidth) * newWidth + 'px';
         image.style.maxHeight = (origHeight / origWidth) * newWidth + 'px';
     };
+    for (let div of imgDivs) {
+        div.style.minHeight = (origHeight / origWidth) * newWidth + 'px';
+        div.style.maxHeight = (origHeight / origWidth) * newWidth + 'px';
+    };
+    
 };
 
 // Grabs the src of the image clicked on and sends it to the modal image.
@@ -70,6 +82,8 @@ favForm.addEventListener('submit', e => {
     };
 });
 
+//sends game information to server and appends a message to DOM on success or failure of task
+//on success it alters the 'Add to Favorites' button to say 'Remove from favorites'
 async function addFavorites(id, name, image, rDate){
     resp = await axios.get(`https://${window.location.host}/games/favorites/add?game_id=${id}&game_name=${name}&game_image=${image}&release_date=${rDate}`);
     $('#flashed_message').remove();
@@ -86,6 +100,8 @@ async function addFavorites(id, name, image, rDate){
     };
 };
 
+//sends game information to server and appends a message to DOM on success or failure of task
+//on success it alters the 'Remove from favorites' button to say 'Add to favorites'
 async function removeFavorites(id){
     resp = await axios.get(`https://${window.location.host}/games/favorites/remove?game_id=${id}`);
     $('#flashed_message').remove();
@@ -100,7 +116,8 @@ async function removeFavorites(id){
     $('#fav_button').addClass('btn-outline-dark');
 };
 
-
+//reaches out to the sever with the Game Name to see if any News articles from the Steam API can be found
+//runs on page load
 async function getNews(){
     resp = await axios.get(`https://${window.location.host}/news/${gameName}`);
     if(resp.data.message === 'None'){
@@ -139,12 +156,9 @@ async function getNews(){
     };
 };
 
-function isEllipsisActive(e) {
-    return (e.offsetWidth < e.scrollWidth);
-};
-
 window.addEventListener('resize', gameDeatsChange);
 
+//alters the DOM appearance based on the window size
 function gameDeatsChange(){
     if($(window).width() >= 1200){
         smallGameDeats.classList.add('d-none');
