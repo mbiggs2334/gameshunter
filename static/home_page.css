@@ -1,0 +1,36 @@
+
+.truncate-text-4 {
+    overflow: hidden;
+    line-height: 2rem;
+    max-height: 8rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+  }
+  
+  .truncate-text-2 {
+    overflow: hidden;
+    line-height: 2rem;
+    max-height: 4rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+  }
+  
+  .card:hover {
+    transform: scale(1.05, 1.05);
+    transition: 0.3s;
+    z-index: 2;
+    border: 1px solid black;
+  }
+  
+  .card:not(:hover) {
+    transform: scale(1, 1);
+    transition: 0.2s;
+  }

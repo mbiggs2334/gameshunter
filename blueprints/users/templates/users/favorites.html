@@ -1,5 +1,8 @@
 {% extends 'index/base.html' %}
-{% block title %}{{user.username}}'s' Favorites{% endblock %}
+{% block title %}{{user.username}}'s Favorites{% endblock %}
+{% block linktags %}
+<link rel="stylesheet" href="{{url_for('users_bp.static', filename='favorites.css')}}">
+{% endblock %}
 {% block content%}
 <div class='darker-gray text-light'>
     <div class='container py-3'>
@@ -24,12 +27,12 @@
                                         {% if g.user.favorites|length == 1 %}
                                         {% else%}
                                         {% if (g.user.favorites|length > 1) and loop.first %}
-                                        <i id='move-down' class="remove fs-2 fas fa-arrow-down"></i>
+                                        <i id='move-down' class="red-text fs-2 fas fa-arrow-down"></i>
                                         {% elif loop.last %}
                                         <i id='move-up' class="text-info fs-2 fas fa-arrow-up"></i>
                                         {% else %}
                                         <i id='move-up' class="mb-3 text-info fs-2 fas fa-arrow-up"></i>
-                                        <i id='move-down' class="remove fs-2 fas fa-arrow-down"></i>
+                                        <i id='move-down' class="red-text fs-2 fas fa-arrow-down"></i>
                                         {% endif %}
                                         {% endif %}
                                     </div>

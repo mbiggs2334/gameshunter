@@ -1,6 +1,7 @@
 {% extends 'index/base.html' %}
 {% block title %}GamesHunter{% endblock %}
 {% block linktags %}
+<link rel="stylesheet" href="{{url_for('index_bp.static', filename='home_page.css')}}">
 {{moment.include_moment()}}
 {% endblock %}
 {% block content%}

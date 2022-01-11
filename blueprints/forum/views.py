@@ -1,5 +1,4 @@
 from flask import render_template, redirect, request, flash, g, Markup, jsonify
-from requests.api import post
 from gamehunter.db import db
 from .forms import NewPostForm, NewCommentForm
 from blueprints.games.models import Games

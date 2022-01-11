@@ -64,7 +64,7 @@
                                 id="dropdownMenuButton1" data-bs-toggle="dropdown" 
                                 aria-expanded="false">@{{g.user.username}}
                                 {% if (g.user.unseen_messages|count) > 0 %}
-                                    <span style='top: -2px; left: 97%;' class="position-absolute  message-flag translate-middle badge border border-dark rounded-pill red">{{(g.user.unseen_messages|count)}}<span class="visually-hidden">unread messages</span></span>
+                                    <span style='top: -2px; left: 97%;' class="position-absolute  message-flag translate-middle badge border border-dark rounded-pill nav-user-btn">{{(g.user.unseen_messages|count)}}<span class="visually-hidden">unread messages</span></span>
                                 {% endif %}
                             </a>
                                 <ul id='drop-menu' class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
@@ -83,8 +83,8 @@
                     {% else %}
                         <div class='text-light align-items-center my-1'>
                             <ul class='navbar-nav'>
-                                <li><a id='login-nav-button' class='remove-content-after shadow-sm btn btn-sm me-2  btn-primary border-dark border' href="/users/login">Login</a></li>
-                                <li><a id='signup-nav-button' class='remove-content-after shadow-sm btn btn-sm nav-user-btn border-dark border' href="/users/signup">Signup</a></li>
+                                <li><a id='login-nav-button' class='shadow-sm btn btn-sm me-2  btn-primary border-dark border' href="/users/login">Login</a></li>
+                                <li><a id='signup-nav-button' class='shadow-sm btn btn-sm nav-user-btn border-dark border' href="/users/signup">Signup</a></li>
                             </ul>
                         </div>
                     {% endif %}

@@ -1,0 +1,14 @@
+#move-up:hover, #move-down:hover{
+    cursor: pointer;
+}
+
+#remove-favorite {
+    top: 3px;
+    left: 5px;
+}
+
+.fav-img-div {
+    height: 150px !important;
+    max-width: 200px !important;
+    width: 100% !important;
+}

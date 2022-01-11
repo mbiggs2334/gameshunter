@@ -18,14 +18,14 @@
                     <div id='message-box' style='max-height: 65vh;' class="col overflow-auto darker-gray pt-2">
                         {% for message in conversation.messages %}
                         {% if message.sent_by_id == g.user.id%}
-                            <div class="row m-0 p-0 message">
+                            <div data-username='{{g.user.username}}' class="row m-0 p-0 message">
                                 <div class='d-inline-flex justify-content-end align-items-end flex-column'>
                                     <span class='primary fw-bold fs-5 mb-1'>@{{g.user.username}}</span>
-                                    <p class='primary text-break m-0'>{{message.content}}</p>
+                                    <p class='primary text-break m-0 text-end'>{{message.content}}</p>
                                 </div>
                             </div>
                         {% else %}
-                        <div class="row m-0 p-0 message align-items-center">
+                        <div data-username='{{other_user.username}}' class="row m-0 p-0 message align-items-center">
                             <div class='d-inline-flex justify-content-start align-items-start flex-column'>
                                 <span class='secondary fw-bold fs-5 mb-1'>@{{other_user.username}}</span>
                                 <p class='secondary text-break m-0'>{{message.content}}</p>

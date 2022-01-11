@@ -25,3 +25,7 @@
     color: white !important;
     transition: .3s ease !important;
 }
+
+.text-darker-gray {
+    color: rgb(58, 58, 58);
+}

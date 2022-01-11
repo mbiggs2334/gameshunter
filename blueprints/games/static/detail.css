@@ -1,3 +1,41 @@
 img:hover{
     cursor:pointer;
 }
+
+.black-half {
+    background-color: rgba(0,0,0,.45);
+}
+
+#news p a {
+    color: white;
+}
+
+#hide- {
+    transform: translateY(100%);
+}
+
+[data-game-cont='game-container']:hover #hide- {
+    transform: translateY(0px) !important;
+    transition: .4s !important;
+}
+
+[data-game-cont='game-container']:not(:hover) #hide- {
+    transform: translateY(100%) !important;
+    transition: .2s !important;
+}
+
+.css-transitions-only-after-page-load * {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+.dev::after{
+    content: ', ';
+}
+
+.dev:last-child::after{
+    content: '';
+}

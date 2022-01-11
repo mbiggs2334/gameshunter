@@ -4,6 +4,7 @@
 
 from gamehunter import create_app, db
 app = create_app()
+app.config['DEBUG'] = True
 
 from flask_socketio import SocketIO
 from flask_mail import Mail
@@ -18,6 +19,7 @@ CORS(app)
 moment = Moment(app)
 mail = Mail(app)
 socketio = SocketIO(app=app, async_mode='gevent')
+
 
 ### Imports blueprints
 from blueprints.blueprints import authenticate_bp, message_bp, index_bp, email_handler_bp, forum_bp, games_bp, news_bp, users_bp
@@ -36,7 +38,6 @@ from blueprints.users.models import User
 @app.before_request
 def add_user_to_global():
     """Adds user to flask global if logged in"""
-    
     if 'curr_user' in session:
         session.permanent = True
         app.permanent_session_lifetime = timedelta(hours=24)
@@ -50,8 +51,8 @@ def add_user_to_global():
     else:
         g.user = None
 
-# from blueprints.users.functions import update_user_active_status
-# threading.Timer(3.0, lambda: update_user_active_status).start()
+from blueprints.users.functions import update_user_active_status
+threading.Timer(3.0, lambda: update_user_active_status).start()
 
 # Starts SocketIO.
 if __name__ == '__main__':

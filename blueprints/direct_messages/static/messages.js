@@ -35,19 +35,19 @@ document.querySelector('form').addEventListener('submit', e => {
 
 chatSocket.on('response', msg => {
     if(msg.sentBy === gUserUsername){
-        $('#message-box').append(`<div class="row m-0 p-0 message">
-        <div class='d-inline-flex justify-content-end align-items-end flex-column'>
-            <span class='primary fw-bold fs-5 mb-1'>@${msg.sentBy}</span>
-            <p class='primary text-break m-0'>${msg.message}</p>
-            </div>
-        </div>`);
+            $('#message-box').append(`<div class="row m-0 p-0 message">
+            <div class='d-inline-flex justify-content-end align-items-end flex-column'>
+                <span class='primary fw-bold fs-5 mb-1'>@${msg.sentBy}</span>
+                <p class='primary text-break m-0 text-end'>${msg.message}</p>
+                </div>
+            </div>`);
     } else {
-    $('#message-box').append(`<div class="row m-0 p-0 message align-items-center">
-    <div class='d-inline-flex justify-content-start align-items-start flex-column'>
-        <span class='secondary fw-bold fs-5 mb-1'>@${msg.sentBy}</span>
-        <p class='secondary text-break m-0'>${msg.message}</p>
-        </div>
-    </div>`)};
+        $('#message-box').append(`<div class="row m-0 p-0 message align-items-center">
+        <div class='d-inline-flex justify-content-start align-items-start flex-column'>
+            <span class='secondary fw-bold fs-5 mb-1'>@${msg.sentBy}</span>
+            <p class='secondary text-break m-0'>${msg.message}</p>
+            </div>
+        </div>`)};
     messageDiv.scrollTop = messageDiv.scrollHeight;
 });
 

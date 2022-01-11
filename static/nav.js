@@ -3,8 +3,7 @@ for(let item of navList){
     if(item === 'users'){
         continue
     };
-    if(window.location.href.indexOf(`${item}`) !== -1 && window.location.href.lastIndexOf(`${item}`) > 7){
-
+    if(window.location.href.indexOf(`${item}`) !== -1 && window.location.href.lastIndexOf(`${item}`) > 9){
         activeNavFlag(`${item}`);
     } else if(window.location.href === `http://${window.location.host}/`){
         activeNavFlag(`home`);

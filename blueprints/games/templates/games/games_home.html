@@ -1,5 +1,8 @@
 {% extends 'index/base.html' %}
 {% block title %}GamesHunter{% endblock %}
+{% block linktags %}
+<link rel="stylesheet" href="{{url_for('games_bp.static', filename='detail.css')}}">
+{% endblock %}
 {% block content%}
 <div class='darker-gray pb-4'>
     <div class='container'>
