@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, g, request, jsonify
+from flask.helpers import make_response
 from gamehunter.db import db
 from blueprints.api.models import RAWGioAPI
 from .models import Games
@@ -67,7 +68,9 @@ def add_game_to_favorites():
         return jsonify(dict(message='You need to be logged in to do that.', category='danger'))
 
     if len(g.user.favorites) >= 10:
-        return jsonify(dict(message=f"You already have the maxiumum amount of favorites. Please <a class='link-light' href='/users/{g.user.id}/favorites'>remove</a> one to add another.", category='danger'))
+        response = make_response(jsonify(dict(message=f"You already have the maxiumum amount of favorites. Please <a class='link-light' href='/users/{g.user.id}/favorites'>remove</a> one to add another.", category='danger')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
 
     game_id = request.args['game_id']
     game_check = Games.check_for_game_in_db(game_id)
@@ -78,7 +81,9 @@ def add_game_to_favorites():
             db.session.add(game_check)
             db.session.commit()
         except:
-            return jsonify(dict(message='Something went wrong. Please try again later.', category='danger'))
+            response = make_response(jsonify(dict(message='Something went wrong. Please try again later.', category='danger')))
+            response.headers['Access-Control-Allow-Credentials'] = True
+            return response
         pass
     
     else:
@@ -89,15 +94,21 @@ def add_game_to_favorites():
     fav_check = FavoriteGames.check_for_favorite(game_id)
     
     if fav_check:
-        return jsonify(dict(message='You already have this game in your favorites.', category='danger'))
+        response = make_response(jsonify(dict(message='You already have this game in your favorites.', category='danger')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
         pass
     
     new_fav = FavoriteGames.create_new_favorite(game_id=game_id, position=len(g.user.favorites) + 1)
     if not new_fav:
-            return jsonify(dict(message='Something went wrong. Please try again later.', category='danger'))
-        
-    return jsonify(dict(message='Game successfully added to your favorites.', category='success'))
+            response = make_response(jsonify(dict(message='Something went wrong. Please try again later.', category='danger')))
+            response.headers['Access-Control-Allow-Credentials'] = True
+            return response
+    
+    response = make_response(jsonify(dict(message='Game successfully added to your favorites.', category='success')))
+    response.headers['Access-Control-Allow-Credentials'] = True
+    return response
 
 
 ##########################################################################################################################################
@@ -121,6 +132,10 @@ def remove_game_from_favorites():
         db.session.commit()
         
     except:
-        return jsonify(dict(message='Something went wrong. Please try again later.', category='danger'))
+        response = make_response(jsonify(dict(message='Something went wrong. Please try again later.', category='danger')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     
-    return jsonify(dict(message='Game successfully removed from your favorites.', category='success'))
+    response = make_response(jsonify(dict(message='Game successfully removed from your favorites.', category='success')))
+    response.headers['Access-Control-Allow-Credentials'] = True
+    return response

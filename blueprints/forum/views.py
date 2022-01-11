@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, flash, g, Markup, jsonify
+from flask import render_template, redirect, request, flash, g, Markup, jsonify, make_response
 from gamehunter.db import db
 from .forms import NewPostForm, NewCommentForm
 from blueprints.games.models import Games
@@ -117,10 +117,13 @@ def add_comment_like(comment_id):
     new_like = UpvoteComment.create_new_comment_upvote(comment_id=comment_id)
     
     if new_like:
-        return jsonify(dict(message='Add Successful.'))
+        response = make_response(jsonify(dict(message='Add Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong.'))
-
+        response = make_response(jsonify(dict(message='Something went wrong.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
 
 ##########################################################################################################################################
     
@@ -138,9 +141,13 @@ def remove_comment_like(comment_id):
     like_removed = UpvoteComment.remove_comment_upvote(comment_id=comment_id)
     
     if like_removed:
-        return jsonify(dict(message='Remove Successful.'))
+        response = make_response(jsonify(dict(message='Remove Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong.'))
+        response = make_response(jsonify(dict(message='Something went wrong.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     
 
 
@@ -161,9 +168,13 @@ def add_comment_dislike(comment_id):
     
     
     if dislike_added:
-        return jsonify(dict(message='Remove Successful.'))
+        response = make_response(jsonify(dict(message='Add Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong.'))
+        response = make_response(jsonify(dict(message='Something went wrong.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     
 
 
@@ -183,9 +194,13 @@ def remove_comment_dislike(comment_id):
     dislike_removed = DownvoteComment.remove_comment_downvote(comment_id=comment_id)
     
     if dislike_removed:
-        return jsonify(dict(message='Remove Successful.'))
+        response = make_response(jsonify(dict(message='Remove Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong.'))
+        response = make_response(jsonify(dict(message='Something went wrong.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     
 
 
@@ -205,9 +220,13 @@ def add_post_like(post_id):
     new_like = UpvotePost.create_new_post_upvote(post_id = post_id)
     
     if new_like:
-        return jsonify(dict(message='Add Successful.'))
+        response = make_response(jsonify(dict(message='Add Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong.', category='danger'))
+        response = make_response(jsonify(dict(message='Something went wrong.', category='danger')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
 
 
 ##########################################################################################################################################
@@ -226,9 +245,13 @@ def remove_post_like(post_id):
     like_removed = UpvotePost.remove_post_upvote(post_id=post_id)
     
     if like_removed:
-            return jsonify(dict(message='Remove Successful.'))
+        response = make_response(jsonify(dict(message='Remove Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong2', category='danger'))
+        response = make_response(jsonify(dict(message='Something went wrong2', category='danger')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
 
 
 ##########################################################################################################################################
@@ -248,9 +271,13 @@ def add_post_dislike(post_id):
 
     
     if new_dislike:
-        return jsonify(dict(message='Remove Successful.'))
+        response = make_response(jsonify(dict(message='Add Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong.', category='danger'))
+        response = make_response(jsonify(dict(message='Something went wrong.', category='danger')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
         
     
 ##########################################################################################################################################
@@ -269,9 +296,13 @@ def remove_post_dislike(post_id):
     removed_dislike = DownvotePost.remove_post_downvote(post_id=post_id)
     
     if removed_dislike:
-        return jsonify(dict(message='Remove Successful.'))
+        response = make_response(jsonify(dict(message='Remove Successful.')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
     else:
-        return jsonify(dict(message='Something went wrong.', category='danger'))
+        response = make_response(jsonify(dict(message='Something went wrong2', category='danger')))
+        response.headers['Access-Control-Allow-Credentials'] = True
+        return response
 
 
 ##########################################################################################################################################
