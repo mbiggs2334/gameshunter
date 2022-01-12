@@ -62,7 +62,7 @@ function changeDomDivs(sortedArray){
         sortedArray.children('#arrow-box').first().append(`<i id='move-down' class="fs-2 red-text fas fa-arrow-down"></i>`);
         sortedArray.children('#arrow-box').last().append(`<i id='move-up' class="text-info fs-2 fas fa-arrow-up"></i>`);
         sortedArray.children('#arrow-box').not(':first').not(':last').append(`<i id='move-up' class="mb-3 text-info fs-2 fas fa-arrow-up"></i>
-        <i id='move-down' class="remove fs-2 fas fa-arrow-down"></i>`);
+        <i id='move-down' class="red-text fs-2 fas fa-arrow-down"></i>`);
     };
 
     for (let i = 0; i < sortedArray.length; i++){
