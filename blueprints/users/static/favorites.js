@@ -59,7 +59,7 @@ function changeDomDivs(sortedArray){
     } else {
         //adds the 'move-up' or 'move-down' arrows depending on div position in the order
         sortedArray.children('#arrow-box').empty();
-        sortedArray.children('#arrow-box').first().append(`<i id='move-down' class="fs-2 remove fas fa-arrow-down"></i>`);
+        sortedArray.children('#arrow-box').first().append(`<i id='move-down' class="fs-2 red-text fas fa-arrow-down"></i>`);
         sortedArray.children('#arrow-box').last().append(`<i id='move-up' class="text-info fs-2 fas fa-arrow-up"></i>`);
         sortedArray.children('#arrow-box').not(':first').not(':last').append(`<i id='move-up' class="mb-3 text-info fs-2 fas fa-arrow-up"></i>
         <i id='move-down' class="remove fs-2 fas fa-arrow-down"></i>`);
