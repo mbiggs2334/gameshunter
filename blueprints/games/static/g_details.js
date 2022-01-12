@@ -54,7 +54,6 @@ function ImageResize(){
         div.style.minHeight = (origHeight / origWidth) * newWidth + 'px';
         div.style.maxHeight = (origHeight / origWidth) * newWidth + 'px';
     };
-    
 };
 
 // Grabs the src of the image clicked on and sends it to the modal image.
@@ -85,7 +84,7 @@ favForm.addEventListener('submit', e => {
 //sends game information to server and appends a message to DOM on success or failure of task
 //on success it alters the 'Add to Favorites' button to say 'Remove from favorites'
 async function addFavorites(id, name, image, rDate){
-    resp = await axios.get(`https://${window.location.host}/games/favorites/add?game_id=${id}&game_name=${name}&game_image=${image}&release_date=${rDate}`, { withCredentials: true});
+    resp = await axios.get(`/games/favorites/add?game_id=${id}&game_name=${name}&game_image=${image}&release_date=${rDate}`, { withCredentials: true});
     $('#flashed_message').remove();
     $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
                                     <div class='text-center'>
@@ -103,7 +102,7 @@ async function addFavorites(id, name, image, rDate){
 //sends game information to server and appends a message to DOM on success or failure of task
 //on success it alters the 'Remove from favorites' button to say 'Add to favorites'
 async function removeFavorites(id){
-    resp = await axios.get(`https://${window.location.host}/games/favorites/remove?game_id=${id}`, { withCredentials: true});
+    resp = await axios.get(`/games/favorites/remove?game_id=${id}`, { withCredentials: true});
     $('#flashed_message').remove();
     $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
                                     <div class='text-center'>
@@ -119,7 +118,7 @@ async function removeFavorites(id){
 //reaches out to the sever with the Game Name to see if any News articles from the Steam API can be found
 //runs on page load
 async function getNews(){
-    resp = await axios.get(`https://${window.location.host}/news/${gameName}`, { withCredentials: true});
+    resp = await axios.get(`/news/${gameName}`, { withCredentials: true});
     if(resp.data.message === 'None'){
         return;
     } else {

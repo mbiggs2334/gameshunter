@@ -77,7 +77,7 @@ async function alreadyUpvotedComment(id, originalValue, counter){
         counter.innerText = parseInt(counter.innerText) - 1;
         $(`#${id} #plus-comment`).removeClass('central-blue-text');
         $(`#${id} #minus-comment`).removeClass('red-text');
-        resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/like/remove`, { withCredentials: true});
+        resp = await axios.get(`/forum/comment/${id}/like/remove`, { withCredentials: true});
         $('#flashed_message').remove();
         if (resp.data.category === 'danger'){
             $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -98,7 +98,7 @@ async function freshUpvotedComment(id, originalValue, counter){
         counter.innerText = parseInt(counter.innerText) + 1;
         $(`#${id} #plus-comment`).addClass('central-blue-text');
         $(`#${id} #minus-comment`).removeClass('red-text');
-        resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/like/add`, { withCredentials: true});
+        resp = await axios.get(`/forum/comment/${id}/like/add`, { withCredentials: true});
         $('#flashed_message').remove();
         if (resp.data.category === 'danger'){
             $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -142,7 +142,7 @@ async function alreadyDownVotedComment(id, originalValue, counter){
     counter.innerText = parseInt(counter.innerText) + 1;
     $(`#${id} #minus-comment`).removeClass('red-text');
     $(`#${id} #plus-comment`).removeClass('central-blue-text');
-    resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/dislike/remove`, { withCredentials: true});
+    resp = await axios.get(`/forum/comment/${id}/dislike/remove`, { withCredentials: true});
     $('#flashed_message').remove();
     if (resp.data.category === 'danger'){
         $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -163,7 +163,7 @@ async function freshDownVoteComment(id, originalValue, counter){
         counter.innerText = parseInt(counter.innerText) - 1;
         $(`#${id} #minus-comment`).addClass('red-text');
         $(`#${id} #plus-comment`).removeClass('central-blue-text');
-        resp = await axios.get(`https://${window.location.host}/forum/comment/${id}/dislike/add`, { withCredentials: true});
+        resp = await axios.get(`/forum/comment/${id}/dislike/add`, { withCredentials: true});
         $('#flashed_message').remove();
         if (resp.data.category === 'danger'){
             $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -220,7 +220,7 @@ async function alreadyUpvotedPost(id, originalValue, counter){
         counter.innerText = parseInt(counter.innerText) - 1;
         $('#plus-post').removeClass('central-blue-text');
         $('#minus-post').removeClass('red-text');
-        resp = await axios.get(`https://${window.location.host}/forum/post/${id}/like/remove`, { withCredentials: true});
+        resp = await axios.get(`/forum/post/${id}/like/remove`, { withCredentials: true});
         $('#flashed_message').remove();
         if (resp.data.category === 'danger'){
             $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -241,7 +241,7 @@ async function freshUpvotedPost(id, originalValue, counter){
     counter.innerText = parseInt(counter.innerText) + 1;
         $('#plus-post').addClass('central-blue-text');
         $('#minus-post').removeClass('red-text');
-        resp = await axios.get(`https://${window.location.host}/forum/post/${id}/like/add`, { withCredentials: true});
+        resp = await axios.get(`/forum/post/${id}/like/add`, { withCredentials: true});
         $('#flashed_message').remove();
         if (resp.data.category === 'danger'){
             $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -279,7 +279,7 @@ async function alreadyDownVotedPost(id, originalValue, counter){
     counter.innerText = parseInt(counter.innerText) + 1;
     $('#minus-post').removeClass('red-text');
     $('#plus-post').removeClass('central-blue-text');
-    resp = await axios.get(`https://${window.location.host}/forum/post/${id}/dislike/remove`, { withCredentials: true});
+    resp = await axios.get(`/forum/post/${id}/dislike/remove`, { withCredentials: true});
     $('#flashed_message').remove();
     if (resp.data.category === 'danger'){
         $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -300,7 +300,7 @@ async function freshDownVotedPost(id, originalValue, counter){
     counter.innerText = parseInt(counter.innerText) - 1;
     $('#minus-post').addClass('red-text');
     $('#plus-post').removeClass('central-blue-text');
-    resp = await axios.get(`https://${window.location.host}/forum/post/${id}/dislike/add`, { withCredentials: true});
+    resp = await axios.get(`/forum/post/${id}/dislike/add`, { withCredentials: true});
     $('#flashed_message').remove();
     if (resp.data.category === 'danger'){
         $('#flashed_messages').append(`<div id='flashed_message' class="border-bottom border-dark alert alert-${resp.data.category} m-0">
@@ -387,7 +387,7 @@ function removeEditCommentForm(id, pTag){
 //removes the 'edit comment' DOM objects and appends the newly edited comment if it receives no error from server
 async function postCommentChange(id){
     let content = $(`#${id} #comment-input`).val()
-    resp = await axios.post(`https://${window.location.host}/forum/comment/${id}/edit?content=${content}`, { withCredentials: true});
+    resp = await axios.post(`/forum/comment/${id}/edit?content=${content}`, { withCredentials: true});
     let oldText = $(`#${id} #old-comment-text`).val()
     removeEditCommentForm(id);
     $('#flashed_message').remove();
