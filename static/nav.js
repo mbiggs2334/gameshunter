@@ -5,7 +5,7 @@ for(let item of navList){
     };
     if(window.location.href.indexOf(`${item}`) !== -1 && window.location.href.lastIndexOf(`${item}`) > 9){
         activeNavFlag(`${item}`);
-    } else if(window.location.href === `https://${window.location.host}/`){
+    } else if(window.location.href === `https://${window.location.host}/` || window.location.href === `http://${window.location.host}/`){
         activeNavFlag(`home`);
     };
 };
